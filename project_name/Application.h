@@ -8,7 +8,7 @@
 
 /**
   * @class Application
-  * @brief Classe Application 
+  * @brief Classe Application   
 */    
 class Application
 {
