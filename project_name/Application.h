@@ -6,12 +6,21 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#include <iostream>
+#include <list>
+#include "LCD.h"
+
+using namespace std;
+
 /**
   * @class Application
   * @brief Classe Application   
 */    
 class Application
 {
+  private :
+    LCD* my_screen;
+    list<Actuators *> my_actuators;
   public :
     /**
      * @fn Application();
