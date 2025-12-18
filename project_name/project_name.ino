@@ -1,18 +1,14 @@
 #include "Application.h"
 #include "LCD.h"
 
-Application myApplication;
-int etat = 0;
-int etat1 = 0;
+//Application myApplication;
 
 void setup() 
 {
-  // put your setup code here, to run once:
   //myApplication.init();
   Serial.begin(9600);
-  pinMode(D7,OUTPUT);
-  pinMode(D5,INPUT);
-  Serial.println("led init");
+  pinMode(D7, OUTPUT);
+  Serial.println("LED test");
 }
 
 void loop() 

@@ -6,11 +6,13 @@
 class Device{
   private:
     String nom;
+    uint8_t pin;
   public:
     static int nb_device;
-    Device(String name);
+    Device(String name, uint8_t pin);
     ~Device();
     String getnom();
+    uint8_t getpin();
     virtual void initialisation()= 0;
 };
 

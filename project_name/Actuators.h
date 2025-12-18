@@ -6,7 +6,7 @@
 
 class Actuators : public Device{
   public:
-    Actuators(String name);
+    Actuators(String name, uint8_t pin);
     ~Actuators();
     virtual void update()= 0;
 };
