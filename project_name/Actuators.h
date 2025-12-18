@@ -5,6 +5,7 @@
 #include "Device.h"
 
 class Actuators : public Device{
+  
   public:
     Actuators(String name, uint8_t pin);
     ~Actuators();

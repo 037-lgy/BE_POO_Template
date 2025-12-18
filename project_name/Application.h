@@ -9,6 +9,7 @@
 #include <iostream>
 #include <list>
 #include "LCD.h"
+#include "LED.h"
 
 using namespace std;
 
@@ -20,6 +21,9 @@ class Application
 {
   private :
     LCD* my_screen;
+    LED* led1;
+    LED* led2;
+    LED* led3;
     list<Actuators *> my_actuators;
   public :
     /**

@@ -13,7 +13,7 @@ void LCD::initialisation(){
   //Wire.begin(4, 5);
   screen.begin(16,2);
   screen.setRGB(r, g, b);
-  screen.print("Dino Run...");
+  screen.print("Dino Dino");
   Serial.print("Initialisation de l'écran : ");
   Serial.println(getnom());
 }

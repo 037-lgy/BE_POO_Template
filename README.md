@@ -9,6 +9,5 @@ Actionneurs :
 
 Capteurs : 
 - 2 boutons
-- touch
 - potentiomètre
 - sound sensor
