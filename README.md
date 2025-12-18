@@ -1,13 +1,14 @@
 # BE_POO_Template
 Projet de base pour Ardouino
 
-Actionneur : 
+Actionneurs : 
 - un buzzer
 - enceinte
 - lcd
+- led
 
 Capteurs : 
 - 2 boutons
-- led
--touch
--potentiomètre
+- touch
+- potentiomètre
+- sound sensor
