@@ -5,7 +5,7 @@
 
 class Sensor : public Device{
   public:
-    Sensor(String name);
+    Sensor(String name, uint8_t pin);
     ~Sensor();
     virtual void readsensor()= 0;
 };

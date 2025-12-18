@@ -1,21 +1,24 @@
-#include "Application.h"
-#include <LiquidCrystal.h>
-#include "LCD.h"
+//#include "Application.h"
+//#include <LiquidCrystal.h>
+//#include "LCD.h"
 
-Application myApplication;
+//Application myApplication;
 
 void setup() 
 {
-  // put your setup code here, to run once:
-  myApplication.init();
-  //pinMode(0,OUTPUT);
-  //pinMode(5,INPUT);
-  //pinMode(12,OUTPUT);
+  //myApplication.init();
+  Serial.begin(9600);
+  pinMode(D7, OUTPUT);
+  Serial.println("LED test");
 }
 
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  myApplication.run();
+  //myApplication.run();
+  digitalWrite(D7,HIGH);
+  delay(500);
+  digitalWrite(D7,LOW);
+  delay(500);
   
 }

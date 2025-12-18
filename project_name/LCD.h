@@ -10,8 +10,8 @@ class LCD : public Actuators{
     rgb_lcd screen;
     char r,g,b;
   public:
-    LCD(String name);
-    LCD(String name, int x, int y, int z);
+    LCD(String name, uint8_t pin);
+    LCD(String name, uint8_t pin, int x, int y, int z);
     ~LCD();
     void update();
     void initialisation();

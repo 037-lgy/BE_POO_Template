@@ -1,9 +1,9 @@
 #include "LCD.h"
 #include <Wire.h> // Pour la communication I2C
 
-LCD::LCD(String name):Actuators(name){}
+LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
 
-LCD::LCD(String name, int x, int y, int z):Actuators(name),r(x), g(y), b(z){}
+LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){}
 
 LCD::~LCD(){
 
