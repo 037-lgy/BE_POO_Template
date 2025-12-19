@@ -5,6 +5,9 @@
 #include "Application.h"
 #include "LCD.h"
 #include "LED.h"
+#include "Buzzer.h"
+#include "Button.h"
+#include "Potentiometre.h"
 
 using namespace std;
 

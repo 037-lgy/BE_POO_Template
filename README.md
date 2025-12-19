@@ -3,11 +3,11 @@ Projet de base pour Ardouino
 
 Actionneurs : 
 - un buzzer
-- enceinte
 - lcd
-- led
+- 3 leds
 
 Capteurs : 
 - 2 boutons
 - potentiomètre
 - sound sensor
+

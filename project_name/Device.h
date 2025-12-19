@@ -11,9 +11,9 @@ class Device{
     static int nb_device;
     Device(String name, uint8_t pin);
     ~Device();
-    String getnom();
-    uint8_t getpin();
-    virtual void initialisation()= 0;
+    String getnom(); //Récupérer le nom du device
+    uint8_t getpin(); //Récupérer le pin associé au device
+    virtual void initialisation()= 0; //Initialiser le device
 };
 
 #endif

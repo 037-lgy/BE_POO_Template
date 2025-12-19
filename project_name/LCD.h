@@ -15,10 +15,10 @@ class LCD : public Actuators{
     ~LCD();
     void update();
     void initialisation();
-    void setcouleur(int r, int g, int b);
-    int getr();
-    int getg();
-    int getb();
+    void setcouleur(int r, int g, int b); //Mettre à jour les couleurs de l'écran
+    int getr(); //Récupérer le niveau de rouge
+    int getg(); //Récupérer le niveau de vert
+    int getb(); //Récupérer le niveau de bleu
 };
 
 #endif

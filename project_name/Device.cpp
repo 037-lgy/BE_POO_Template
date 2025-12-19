@@ -2,7 +2,9 @@
 
 int Device::nb_device = 0;
 
-Device::Device(String name, uint8_t PIN):nom(name),pin(PIN){}
+Device::Device(String name, uint8_t PIN):nom(name),pin(PIN){
+  nb_device++;
+}
 
 Device::~Device(){
   nb_device--;
