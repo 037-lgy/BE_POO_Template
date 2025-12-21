@@ -6,15 +6,11 @@ Application myApplication;
 void setup() 
 {
   myApplication.init();
-  Serial.begin(115200);
-  //pinMode(D7, OUTPUT);
-  //pinMode(D5, OUTPUT);
-  //pinMode(D0, OUTPUT);
-  pinMode(D6, INPUT_PULLUP);
-  //pinMode(D8, OUTPUT);
+  //Serial.begin(9600);
+  //pinMode(D6, INPUT_PULLUP);
   //pinMode(D8, INPUT_PULLUP);
   //pinMode(D9, OUTPUT);
-  Serial.println("Test LED + Bouton pret");
+  //Serial.println("Test LED + Bouton pret");
 }
 
 void loop() 

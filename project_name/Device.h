@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 class Device{
-  private:
+  protected:
     String nom;
     uint8_t pin;
   public:

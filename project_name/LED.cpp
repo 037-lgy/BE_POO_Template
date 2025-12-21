@@ -9,14 +9,15 @@ LED::~LED(){
 }
 
 void LED::initialisation(){
-  pinMode(getpin(),OUTPUT);
-  digitalWrite(getpin(),LOW);
-  Serial.println("Initialisation de la led : ");
-  Serial.println(getnom());
+  pinMode(pin,OUTPUT);
+  digitalWrite(pin,LOW);
+  while(!Serial.isTxEnabled()){}
+  Serial.print("Initialisation de la led : ");
+  Serial.println(nom);
 }
 
 void LED::update(){
-  digitalWrite(getpin(), state);
+  digitalWrite(pin, state);
 }
 
 void LED::set_on(){

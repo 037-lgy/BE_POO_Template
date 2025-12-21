@@ -10,6 +10,8 @@
 #include <list>
 #include "LCD.h"
 #include "LED.h"
+#include "Buzzer.h"
+#include "Button.h"
 
 using namespace std;
 
@@ -24,7 +26,12 @@ class Application
     LED* led1;
     LED* led2;
     LED* led3;
+    Buzzer* buzzer;
     list<Actuators *> my_actuators;
+
+    Button* button1;
+    Button* button2;
+    list<Sensors *> my_sensors;
   public :
     /**
      * @fn Application();
