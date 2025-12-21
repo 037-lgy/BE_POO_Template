@@ -9,9 +9,9 @@ Potentiometre::~Potentiometre(){
 }
 
 void Potentiometre::initialisation(){
-  pinMode(getpin(),INPUT);
+  pinMode(pin,INPUT);
   Serial.print("Initialisation du potentiometre : ");
-  Serial.println(getnom());
+  Serial.println(nom);
 }
 
 uint16_t Potentiometre::readsensor(){

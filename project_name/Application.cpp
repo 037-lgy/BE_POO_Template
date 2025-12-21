@@ -3,11 +3,6 @@
 #include <iostream>
 #include <list>
 #include "Application.h"
-#include "LCD.h"
-#include "LED.h"
-#include "Buzzer.h"
-#include "Button.h"
-#include "Potentiometre.h"
 
 using namespace std;
 
@@ -24,7 +19,7 @@ Application::Application()
   led1 = new LED("led_bouton1", D5);
   led2 = new LED("led_bouton2", D0);
   led3 = new LED("led_simple", D7);
-  buzzer = new Buzzer("Buzzer1", D4); //A voir sur quel port le mettre ? D4 pourrait fonctionner mais après le téléversement
+  buzzer = new Buzzer("Buzzer", D4); //A voir sur quel port le mettre ? D4 pourrait fonctionner mais après le téléversement
   my_actuators.push_back(my_screen);
   my_actuators.push_back(led1);
   my_actuators.push_back(led2);
@@ -33,8 +28,10 @@ Application::Application()
 
   button1 = new Button("Bouton1", D6);
   button2 = new Button("Bouton2", D3);
+  potentiometre = new Potentiometre("Potentiometre", A0);
   my_sensors.push_back(button1);
   my_sensors.push_back(button2);
+  my_sensors.push_back(potentiometre);
 }
   
 Application::~Application()
@@ -53,9 +50,7 @@ void Application::init(void)
 
 void Application::run(void)
 {
-  //int bouton1 = digitalRead(D6);
-  //int bouton2 = digitalRead(D8);
-  if (button1->readsensor() == HIGH || button2->readsensor() == HIGH) {//|| bouton2 == HIGH
+  if (button1->readsensor() == HIGH || button2->readsensor() == HIGH) {
     led1->set_off();
     led2->set_off();
     led3->set_off();
@@ -67,6 +62,7 @@ void Application::run(void)
     led3->set_on();
     buzzer->set_on();
     my_screen->setcouleur(my_screen->getr()+30,my_screen->getg()+20,my_screen->getb()+50);
+    Serial.println(potentiometre->readsensor());
   }
   for (Actuators* actuator : my_actuators) actuator->update();
 }

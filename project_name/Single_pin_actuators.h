@@ -3,13 +3,12 @@
 
 #include "Actuators.h"
 
-class Onebit_Actuators : Actuators{
+class Single_pin_actuators : public Actuators{
   protected:
     uint8_t state;
   public:
-    Onebit_Actuators(String name, uint8_t pin);
-    ~Onebit_Actuators();
-    void initialisation();
+    Single_pin_actuators(String name, uint8_t pin);
+    ~Single_pin_actuators();
     void update();
     void set_on(); //Allumer l'actionneur
     void set_off(); //Eteindre l'actionneur

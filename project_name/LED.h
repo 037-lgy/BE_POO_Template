@@ -1,19 +1,13 @@
 #ifndef LED_H_
 #define LED_H_
 
-#include "Actuators.h"
+#include "Single_pin_actuators.h"
 
-class LED : public Actuators{
-  private:
-    uint8_t state;
+class LED : public Single_pin_actuators{
   public:
     LED(String name, uint8_t pin);
     ~LED();
     void initialisation();
-    void update();
-    void set_on(); //Allumer l'actionneur
-    void set_off(); //Eteindre l'actionneur
-    void toggle(); // Changer l'état de l'actionneur
 };
 
 #endif

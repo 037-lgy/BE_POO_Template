@@ -9,16 +9,16 @@ Button::~Button(){
 }
 
 void Button::initialisation(){
-  pinMode(getpin(),INPUT);
+  pinMode(pin,INPUT);
   Serial.print("Initialisation du bouton : ");
-  Serial.println(getnom());
+  Serial.println(nom);
 }
 
 uint16_t Button::readsensor(){
-  state = digitalRead(getpin());
+  state = digitalRead(pin);
   return state;
 }
 
 bool Button::issame(){
-  return (state == digitalRead(getpin()));
+  return (state == digitalRead(pin));
 }

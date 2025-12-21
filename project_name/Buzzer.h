@@ -3,19 +3,15 @@
 #ifndef BUZZER_H_
 #define BUZZER_H_
 
-#include "Actuators.h"
+#include "Single_pin_actuators.h"
 
-class Buzzer : public Actuators{
+class Buzzer : public Single_pin_actuators{
   private:
     uint8_t state;
   public:
     Buzzer(String name, uint8_t pin);
     ~Buzzer();
     void initialisation();
-    void update();
-    void set_on();
-    void set_off();
-    void toggle();
 };
 
 #endif

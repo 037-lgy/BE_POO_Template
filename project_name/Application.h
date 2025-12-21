@@ -12,6 +12,7 @@
 #include "LED.h"
 #include "Buzzer.h"
 #include "Button.h"
+#include "Potentiometre.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ class Application
 
     Button* button1;
     Button* button2;
+    Potentiometre* potentiometre;
     list<Sensors *> my_sensors;
   public :
     /**
