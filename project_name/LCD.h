@@ -9,6 +9,7 @@
 #include "Game_Object.h"
 
 extern uint8_t dinodino[8];
+enum mode{MENU, JEU};
 
 class LCD : public Actuators{
   private:
@@ -17,6 +18,7 @@ class LCD : public Actuators{
     std::array<std::array<Game_Object*, 16>, 2> matrice;
     String ligne0;
     String ligne1;
+    mode currentmode;
   public:
     LCD(String name, uint8_t pin);
     LCD(String name, uint8_t pin, int x, int y, int z);
@@ -26,6 +28,7 @@ class LCD : public Actuators{
     void waiting_screen();
     void start();
     void setcouleur(int r, int g, int b); //Mettre à jour les couleurs de l'écran
+    void resetmatrice();
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert

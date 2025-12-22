@@ -14,7 +14,9 @@ uint8_t dinodino[8] = {
 
 LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
 
-LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){}
+LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
+  currentmode = MENU;
+}
 
 LCD::~LCD(){
 
@@ -44,6 +46,7 @@ void LCD::waiting_screen(){
   screen.print(ligne0);
   screen.setCursor(0,1);
   screen.print(ligne1);
+  currentmode = MENU;
 }
 
 void LCD::start(){
@@ -62,19 +65,33 @@ void LCD::start(){
   screen.print(ligne1[14]);
   delay(500);
   screen.clear();
+  currentmode = JEU;
 }
 
 void LCD::update(){
-  screen.setRGB(r,g,b);
-  for (int i = 0; i < 2; i++){
-    for (int j = 0; j < 16; j++){
-      screen.setCursor(j,i);
-      if (matrice[i][j] != nullptr){
-        if (matrice[i][j]->getshape() == dinodino)
-        screen.write((uint8_t)0);
+  if (currentmode == MENU){
+
+  }
+  else {
+    screen.setRGB(r,g,b);
+    for (int i = 0; i < 2; i++){
+      for (int j = 0; j < 16; j++){
+        screen.setCursor(j,i);
+        if (matrice[i][j] != nullptr){
+          if (matrice[i][j]->getshape() == dinodino)
+          screen.write((uint8_t)0);
+        }
+        else screen.print(" ");
       }
-      else screen.print(" ");
     }
+  }
+}
+
+void LCD::resetmatrice(){
+  for (int i = 0; i < 2; i++){
+      for (int j = 0; j < 16; j++){
+        this->setmatrice(nullptr, i, j);
+      }
   }
 }
 

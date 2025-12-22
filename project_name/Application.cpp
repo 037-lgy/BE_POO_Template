@@ -72,7 +72,8 @@ void Application::run(void)
     }
     else if (previousstate != EN_ATTENTE){
       my_screen->waiting_screen();
-      
+      my_screen->resetmatrice();
+      my_dino->setpos(1, 4);
       previousstate = EN_ATTENTE;
     }
   }
@@ -84,11 +85,11 @@ void Application::run(void)
       if (button_rouge->readsensor() == LOW){
         my_dino->jump();
       }
-      my_screen->setcouleur(0, 0, 0);
+      my_screen->setcouleur(255, 255, 0);
+      my_screen->resetmatrice();
       for (Game_Object* objects : my_objects) my_screen->setmatrice(objects, objects->getx(), objects->gety());
       previousstate = EN_JEU;
     }
-    for (Actuators* actuator : my_actuators) actuator->update();
   }
-  //for (Actuators* actuator : my_actuators) actuator->update();
+  for (Actuators* actuator : my_actuators) actuator->update();
 }
