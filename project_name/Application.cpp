@@ -43,26 +43,38 @@ Application::~Application()
 void Application::init(void)
 {
   Serial.begin(9600);
-  for (Actuators* actuator : my_actuators) actuator->initialisation();
-  for (Sensors* sensor : my_sensors) sensor->initialisation();
+  delay(500); //Pour stabiliser les courants se stabiliser sur la carte
+  Serial.println("--DEBUT DE L'INITIALISATION--");
+  for (Actuators* actuator : my_actuators) {
+    actuator->initialisation();
+    delay(100);
+  }
+  for (Sensors* sensor : my_sensors) {
+    sensor->initialisation();
+    delay(100);
+  }
+  Serial.println("--FIN DE L'INITIALISATION--");
+  while(button1->readsensor() == HIGH){}
+  my_screen->start();
 }
 
 
 void Application::run(void)
 {
-  if (button1->readsensor() == HIGH || button2->readsensor() == HIGH) {
-    led1->set_off();
-    led2->set_off();
-    led3->set_off();
-    buzzer->set_off();
-  }
-  else {
-    led1->set_on();
-    led2->set_on();
-    led3->set_on();
-    buzzer->set_on();
-    my_screen->setcouleur(my_screen->getr()+30,my_screen->getg()+20,my_screen->getb()+50);
-    Serial.println(potentiometre->readsensor());
-  }
+  // if (button1->readsensor() == HIGH || button2->readsensor() == HIGH) {
+  //   led1->set_off();
+  //   led2->set_off();
+  //   led3->set_off();
+  //   buzzer->set_off();
+  // }
+  // else {
+  //   led1->set_on();
+  //   led2->set_on();
+  //   led3->set_on();
+  //   buzzer->set_on();
+  //   my_screen->setcouleur(my_screen->getr()+30,my_screen->getg()+20,my_screen->getb()+50);
+  //   Serial.println(potentiometre->readsensor());
+  // }
+  //if (button1->readsensor() == LOW) my_screen->start();
   for (Actuators* actuator : my_actuators) actuator->update();
 }
