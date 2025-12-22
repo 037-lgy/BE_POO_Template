@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <sys/types.h>
 #ifndef LCD_H_
 #define LCD_H_
@@ -6,6 +7,8 @@
 #include <rgb_lcd.h>
 #include <array>
 #include "Game_Object.h"
+
+extern uint8_t dinodino[8];
 
 class LCD : public Actuators{
   private:
@@ -18,6 +21,7 @@ class LCD : public Actuators{
     ~LCD();
     void update();
     void initialisation();
+    void waiting_screen();
     void start();
     void setcouleur(int r, int g, int b); //Mettre à jour les couleurs de l'écran
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd

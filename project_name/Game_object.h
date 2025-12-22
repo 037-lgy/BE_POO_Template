@@ -1,19 +1,22 @@
+#include "c_types.h"
+#include <stdint.h>
 #ifndef GAME_OBJECT_H_
 #define GAME_OBJECT_H_
 
-#include <array>
 #include <Arduino.h>
 
 class Game_Object{
   protected:
-    std::array<uint8_t, 8> shape;
-    int x;
-    int y;
+    uint8_t* shape; // Forme d' l'objet (8 objets maximum)
+    int x; //Ligne sur le lcd
+    int y; //Colonne sur le lcd
   public:
-    Game_Object(std::array<uint8_t, 8>& tab, int x, int y);
+    Game_Object(uint8_t* tab, int x, int y);
     ~Game_Object();
     void setpos(int x, int y);
-    std::array<uint8_t, 8> getshape(); //getteur de la forme de l'objet
+    int getx();
+    int gety();
+    uint8_t* getshape(); //getteur de la forme de l'objet
 };
 
 #endif

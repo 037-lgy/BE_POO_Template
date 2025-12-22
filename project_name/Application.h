@@ -13,8 +13,11 @@
 #include "Buzzer.h"
 #include "Button.h"
 #include "Potentiometre.h"
+#include "Dino.h"
 
 using namespace std;
+
+enum state{EN_ATTENTE, EN_JEU};
 
 /**
   * @class Application
@@ -30,10 +33,16 @@ class Application
     Buzzer* buzzer;
     list<Actuators *> my_actuators;
 
-    Button* button1;
-    Button* button2;
+    Button* button_rouge;
+    Button* button_orange;
     Potentiometre* potentiometre;
     list<Sensors *> my_sensors;
+
+    state currentstate;
+    state previousstate; //Pour éviter de réafficher en boucle le même texte
+
+    Dino* my_dino;
+    list<Game_Object *> my_objects;
   public :
     /**
      * @fn Application();

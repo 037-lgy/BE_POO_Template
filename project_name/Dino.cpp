@@ -1,6 +1,6 @@
 #include "Dino.h"
 
-Dino::Dino(std::array<uint8_t, 8>& tab, int x, int y):Game_Object(tab, x, y){}
+Dino::Dino(uint8_t* tab, int x, int y):Game_Object(tab, x, y){}
 
 Dino::~Dino(){
 
