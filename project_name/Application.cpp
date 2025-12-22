@@ -36,7 +36,7 @@ Application::Application()
   currentstate = EN_ATTENTE;
   previousstate = EN_JEU;
 
-  my_dino = new Dino(dinodino, 0, 4);
+  my_dino = new Dino(dinodino, 1, 4);
   my_objects.push_back(my_dino);
 }
   
@@ -72,6 +72,7 @@ void Application::run(void)
     }
     else if (previousstate != EN_ATTENTE){
       my_screen->waiting_screen();
+      
       previousstate = EN_ATTENTE;
     }
   }
@@ -80,10 +81,14 @@ void Application::run(void)
       currentstate = EN_ATTENTE;
     }
     else {
+      if (button_rouge->readsensor() == LOW){
+        my_dino->jump();
+      }
       my_screen->setcouleur(0, 0, 0);
-      my_screen->setmatrice(my_dino, my_dino->getx(), my_dino->gety());
+      for (Game_Object* objects : my_objects) my_screen->setmatrice(objects, objects->getx(), objects->gety());
       previousstate = EN_JEU;
     }
+    for (Actuators* actuator : my_actuators) actuator->update();
   }
-  for (Actuators* actuator : my_actuators) actuator->update();
+  //for (Actuators* actuator : my_actuators) actuator->update();
 }

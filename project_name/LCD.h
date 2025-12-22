@@ -15,6 +15,8 @@ class LCD : public Actuators{
     rgb_lcd screen;
     char r,g,b;
     std::array<std::array<Game_Object*, 16>, 2> matrice;
+    String ligne0;
+    String ligne1;
   public:
     LCD(String name, uint8_t pin);
     LCD(String name, uint8_t pin, int x, int y, int z);

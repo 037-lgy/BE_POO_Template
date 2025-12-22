@@ -2,14 +2,14 @@
 #include <Wire.h> // Pour la communication I2C
 
 uint8_t dinodino[8] = {
+  0b00000,
   0b00111, //   ###
   0b00101, //   # #
   0b00111, //   ###
   0b00100, //   #
   0b11110, // ####
   0b01010, //  # #
-  0b01010, //  # #
-  0b00000
+  0b01010 //  # #
 };
 
 LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
@@ -23,9 +23,6 @@ LCD::~LCD(){
 void LCD::initialisation(){
   //Wire.begin(4, 5);
   screen.begin(16,2);
-  //screen.setRGB(r, g, b);
-  //screen.println("Dino runner...");
-  //screen.print("Start: press red");
   this->waiting_screen();
   Serial.print("Initialisation de l'écran : ");
   Serial.println(nom);
@@ -34,6 +31,8 @@ void LCD::initialisation(){
 
 void LCD::waiting_screen(){
   screen.clear();
+  ligne0 = "Dino runner...";
+  ligne1 = "Start: press red";
   this->setcouleur(255, 255, 255);
   for (int i = 0; i < 2; i++){
     for (int j = 0; j < 16; j++){
@@ -42,41 +41,25 @@ void LCD::waiting_screen(){
   }
   screen.setCursor(0,0);
   screen.setRGB(r, g, b);
-  screen.print("Dino runner...");
+  screen.print(ligne0);
   screen.setCursor(0,1);
-  screen.print("Start: press red");
+  screen.print(ligne1);
 }
 
 void LCD::start(){
   screen.clear();
   screen.setCursor(0,0);
-  screen.print("Debut dans : ");
+  ligne0 = "Debut dans : ";
+  screen.print(ligne0);
   screen.setCursor(0,1);
-  screen.print("3");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print("2");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print("1");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print(".");
-  delay(250);
-  screen.print("GO!");
+  ligne1 = "3...2...1...GO!";
+  for (int i = 0; i < 12; i++) {
+    screen.print(ligne1[i]);
+    delay(250);
+  }
+  screen.print(ligne1[12]);
+  screen.print(ligne1[13]);
+  screen.print(ligne1[14]);
   delay(500);
   screen.clear();
 }
@@ -90,6 +73,7 @@ void LCD::update(){
         if (matrice[i][j]->getshape() == dinodino)
         screen.write((uint8_t)0);
       }
+      else screen.print(" ");
     }
   }
 }
