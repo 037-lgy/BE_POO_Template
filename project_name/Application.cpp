@@ -82,11 +82,12 @@ void Application::run(void)
       currentstate = EN_ATTENTE;
     }
     else {
-      if (button_rouge->readsensor() == LOW){
+      if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping())){
         my_dino->jump();
       }
       my_screen->setcouleur(255, 255, 0);
       my_screen->resetmatrice();
+      my_dino->update_jump();
       for (Game_Object* objects : my_objects) my_screen->setmatrice(objects, objects->getx(), objects->gety());
       previousstate = EN_JEU;
     }
