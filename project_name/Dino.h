@@ -15,8 +15,8 @@ class Dino : public Game_Object{
     ~Dino();
     void jump();
     void update_jump();
-    void avoid();
     bool getisjumping();
+    void avoid(); // A faire
 };
 
 #endif

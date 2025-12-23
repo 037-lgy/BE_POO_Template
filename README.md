@@ -24,3 +24,5 @@ Dans l'état en jeu : mécaniques de jeu
 - powerup
 - oiseau
 ...
+
+Il faudrait peut-être changer la matrice de l'écran pour prendre un type énuméré composé d'un objet et d'un char, si l'objet est nul, alors on affiche le char à la place.
