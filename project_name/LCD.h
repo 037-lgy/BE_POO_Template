@@ -9,7 +9,11 @@
 #include "Game_Object.h"
 
 extern uint8_t dinodino[8];
-enum mode{MENU, JEU};
+extern uint8_t cactus[8];
+extern uint8_t bird_wings_down[8];
+extern uint8_t bird_wings_up[8];
+
+enum mode{MENU, JEU, OVER};
 
 class LCD : public Actuators{
   private:
@@ -26,6 +30,7 @@ class LCD : public Actuators{
     void update();
     void initialisation();
     void waiting_screen();
+    void ending_screen();
     void start();
     void setcouleur(int r, int g, int b); //Mettre à jour les couleurs de l'écran
     void resetmatrice();

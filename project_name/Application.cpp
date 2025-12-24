@@ -37,7 +37,9 @@ Application::Application()
   previousstate = EN_JEU;
 
   my_dino = new Dino(dinodino, 1, 4);
+  cactus1 = new Cactus(cactus, 1, 15);
   my_objects.push_back(my_dino);
+  my_objects.push_back(cactus1);
 }
   
 Application::~Application()
@@ -63,8 +65,7 @@ void Application::init(void)
 }
 
 
-void Application::run(void)
-{
+void Application::run(void) {
   if (currentstate == EN_ATTENTE){
     if (button_rouge->readsensor() == LOW){
       my_screen->start();
@@ -73,13 +74,16 @@ void Application::run(void)
     else if (previousstate != EN_ATTENTE){
       my_screen->waiting_screen();
       my_screen->resetmatrice();
+      led1->set_on();
       my_dino->setpos(1, 4);
+      cactus1->setpos(1, 15);
       previousstate = EN_ATTENTE;
     }
   }
   else if (currentstate == EN_JEU) {
+    led1->set_off();
     if(button_orange->readsensor() == LOW){
-      currentstate = EN_ATTENTE;
+      currentstate = GAME_OVER;
     }
     else {
       if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping())){
@@ -88,9 +92,25 @@ void Application::run(void)
       my_screen->setcouleur(255, 255, 0);
       my_screen->resetmatrice();
       my_dino->update_jump();
+      cactus1->update_pos();
       for (Game_Object* objects : my_objects) my_screen->setmatrice(objects, objects->getx(), objects->gety());
       previousstate = EN_JEU;
     }
   }
-  for (Actuators* actuator : my_actuators) actuator->update();
+  else if (currentstate == GAME_OVER) {
+    led1->set_on();
+    if (button_rouge->readsensor() == LOW){
+      delay(500);
+      currentstate = EN_ATTENTE;
+    }
+    else if (previousstate != GAME_OVER){
+      my_screen->ending_screen();
+      my_screen->resetmatrice();
+      // on peut allumer / faire clignoter des leds
+      previousstate = GAME_OVER;
+    }
+  }
+  for (Actuators* actuator : my_actuators) {
+    actuator->update();
+  }
 }

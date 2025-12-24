@@ -14,10 +14,11 @@
 #include "Button.h"
 #include "Potentiometre.h"
 #include "Dino.h"
+#include "Cactus.h"
 
 using namespace std;
 
-enum state{EN_ATTENTE, EN_JEU};
+enum state{EN_ATTENTE, EN_JEU, GAME_OVER};
 
 /**
   * @class Application
@@ -42,6 +43,7 @@ class Application
     state previousstate; //Pour éviter de réafficher en boucle le même texte
 
     Dino* my_dino;
+    Cactus* cactus1;
     list<Game_Object *> my_objects;
   public :
     /**

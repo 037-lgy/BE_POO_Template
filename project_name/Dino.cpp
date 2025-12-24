@@ -36,3 +36,7 @@ void Dino::update_jump(){
 bool Dino::getisjumping(){
   return isjumping;
 }
+
+bool Dino::collision(){
+  return col;
+}

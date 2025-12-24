@@ -11,19 +11,14 @@ void Cactus::apparition(){
   y = 15;
 }
 
-void Cactus::goleft(){
-  if(!isgoingleft){
+void Cactus::update_pos(){
+  if (!isgoingleft){
     isgoingleft = true;
     gotime = millis();
-    if (y > 0) y--;
-    else y = 15; // Voir qu'est-ce qu'il se passe pour l'objet à la fin
+    if (y > 0 ) y--;
+    else y = 15;
   }
-}
-
-void Cactus::update_left(){
-  if (isgoingleft){
-    if ((millis() - gotime) >= 500){
-      isgoingleft = false;
-    }
+  else if (millis() - gotime >= 200){
+    isgoingleft = false;
   }
 }

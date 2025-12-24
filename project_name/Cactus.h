@@ -12,6 +12,7 @@ class Cactus : public Game_Object{
     ~Cactus();
     void goleft();
     void update_left();
+    void update_pos(); // Pas besoin de update left et goleft je pense, seulement celle ci mais à checker en réel
     void apparition();
 };
 

@@ -10,12 +10,14 @@ class Dino : public Game_Object{
     bool islanding;
     unsigned long jumptime;
     unsigned long landtime;
+    bool col; // A utiliser pour collision
   public :
     Dino(uint8_t* tab, int x, int y);
     ~Dino();
     void jump();
     void update_jump();
     bool getisjumping();
+    bool collision(); // A faire
     void avoid(); // A faire
 };
 
