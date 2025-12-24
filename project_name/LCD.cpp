@@ -14,6 +14,17 @@ uint8_t dinodino[8] = {
   0b01010 //  # #
 };
 
+uint8_t dinodinolying[8] = {
+  0b00000,
+  0b00000, //
+  0b00000, //
+  0b00000, //
+  0b00000, //
+  0b11111, // #####
+  0b10101, // # # #
+  0b10111 //  # ###
+};
+
 uint8_t cactus[8] = {
   0b00100, //   #
   0b00100, //   #
@@ -67,6 +78,7 @@ void LCD::initialisation(){
   screen.createChar(1, cactus);
   screen.createChar(2, bird_wings_down);
   screen.createChar(3, bird_wings_up);
+  screen.createChar(4, dinodinolying);
 }
 
 void LCD::waiting_screen(){
@@ -117,7 +129,7 @@ void LCD::start(){
 }
 
 void LCD::update(){
-  if (currentmode == MENU){
+  if (currentmode == MENU || currentmode == OVER){
 
   }
   else {
@@ -131,6 +143,12 @@ void LCD::update(){
           }
           else if (matrice[i][j]->getshape() == cactus) {
             screen.write((uint8_t)1);
+          }
+          else if (matrice[i][j]->getshape() == bird_wings_down) {
+            screen.write((uint8_t)2);
+          }
+          else if (matrice[i][j]->getshape() == dinodinolying) {
+            screen.write((uint8_t)4);
           }
         }
         else screen.print(" ");
@@ -147,6 +165,10 @@ void LCD::resetmatrice(){
   }
 }
 
+bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
+  return (obj1->getx() == obj2->getx() && obj1->gety() == obj2->gety());
+}
+
 void LCD::setcouleur(int r, int g, int b){
   this->r = r;
   this->g = g;
@@ -158,5 +180,5 @@ int LCD::getb() {return b;}
 int LCD::getg() {return g;}
 
 void LCD::setmatrice(Game_Object* obj, int x, int y){
-  matrice[x][y] = obj;
+  if (y >= 0) matrice[x][y] = obj;
 }

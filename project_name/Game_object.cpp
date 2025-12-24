@@ -22,3 +22,7 @@ int Game_Object::gety(){
 uint8_t* Game_Object::getshape(){
   return this->shape;
 }
+
+void Game_Object::changeshape(uint8_t *tab){
+  this->shape = tab;
+}

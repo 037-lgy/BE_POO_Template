@@ -17,6 +17,7 @@ class Game_Object{
     int getx();
     int gety();
     uint8_t* getshape(); //getteur de la forme de l'objet
+    void changeshape(uint8_t* tab);
 };
 
 #endif

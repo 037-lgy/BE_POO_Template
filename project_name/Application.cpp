@@ -1,3 +1,4 @@
+#include "core_esp8266_features.h"
 #include <Arduino.h>
 #include "pins_arduino.h"
 #include <iostream>
@@ -38,8 +39,16 @@ Application::Application()
 
   my_dino = new Dino(dinodino, 1, 4);
   cactus1 = new Cactus(cactus, 1, 15);
+  bird1 = new Bird(bird_wings_down, 0, -10);
+  cactus2 = new Cactus(cactus,1,-10);
+  bird2 = new Bird(bird_wings_down, 0, -10);
   my_objects.push_back(my_dino);
   my_objects.push_back(cactus1);
+  my_objects.push_back(bird1);
+  my_objects.push_back(cactus2);
+  my_objects.push_back(bird2);
+
+  spawndelay = 3000;
 }
   
 Application::~Application()
@@ -62,8 +71,40 @@ void Application::init(void)
     delay(100);
   }
   Serial.println("--FIN DE L'INITIALISATION--");
+  lastspawn = (unsigned long)0;
 }
 
+void Application::randomspawn(){
+  if ((millis() - lastspawn) >= spawndelay){
+    int choice = random(3);
+    if (choice == 0){
+      if (cactus1->gety() == -1){
+        cactus1->spawn();
+      }
+      else if (cactus2->gety() == -1) {
+        cactus2->spawn();
+      }
+    }
+    else if (choice == 1){
+      if (bird1->gety() == -1){
+        bird1->spawn(0);
+      }
+      else if (bird2->gety() == -1) {
+        bird2->spawn(0);
+      }
+    }
+    else if (choice == 2){
+      if (bird1->gety() == -1){
+        bird1->spawn(1);
+      }
+      else if (bird2->gety() == -1) {
+        bird2->spawn(1);
+      }
+    }
+    lastspawn = millis();
+    // Il faudra changer le delay de spawn suivant soit l'avancement dans le jeu, soit le potentiomètre
+  }
+}
 
 void Application::run(void) {
   if (currentstate == EN_ATTENTE){
@@ -73,16 +114,24 @@ void Application::run(void) {
     }
     else if (previousstate != EN_ATTENTE){
       my_screen->waiting_screen();
-      my_screen->resetmatrice();
+      led2->set_off();
       led1->set_on();
       my_dino->setpos(1, 4);
       cactus1->setpos(1, 15);
+      bird1->setpos(0, -1);
+      cactus2->setpos(1, -1);
+      bird2->setpos(0, -1);
       previousstate = EN_ATTENTE;
     }
   }
   else if (currentstate == EN_JEU) {
     led1->set_off();
-    if(button_orange->readsensor() == LOW){
+    randomspawn();
+    if(button_orange->readsensor() == LOW || 
+    my_screen->collision(my_dino, cactus1) || 
+    my_screen->collision(my_dino, bird1) || 
+    my_screen->collision(my_dino, cactus2) || 
+    my_screen->collision(my_dino, bird2)){
       currentstate = GAME_OVER;
     }
     else {
@@ -93,19 +142,22 @@ void Application::run(void) {
       my_screen->resetmatrice();
       my_dino->update_jump();
       cactus1->update_pos();
+      bird1->update_pos();
+      cactus2->update_pos();
+      bird2->update_pos();
       for (Game_Object* objects : my_objects) my_screen->setmatrice(objects, objects->getx(), objects->gety());
       previousstate = EN_JEU;
     }
   }
   else if (currentstate == GAME_OVER) {
-    led1->set_on();
-    if (button_rouge->readsensor() == LOW){
-      delay(500);
+    led2->set_on();
+    delay(200);
+    if (button_orange->readsensor() == LOW){
+      delay(200);
       currentstate = EN_ATTENTE;
     }
     else if (previousstate != GAME_OVER){
       my_screen->ending_screen();
-      my_screen->resetmatrice();
       // on peut allumer / faire clignoter des leds
       previousstate = GAME_OVER;
     }

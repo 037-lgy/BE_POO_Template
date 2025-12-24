@@ -1,18 +1,18 @@
-#include "Cactus.h"
+#include "Bird.h"
 
-Cactus::Cactus(uint8_t* tab, int x, int y):Game_Object(tab, x, y), isgoingleft(false), gotime((unsigned long)0){}
+Bird::Bird(uint8_t* tab, int x, int y):Game_Object(tab, x, y){}
 
-Cactus::~Cactus(){
+Bird::~Bird(){
 
 }
 
-void Cactus::spawn(){
-  x = 1;
+void Bird::spawn(int x){
+  this->x = x;
   y = 15;
   isgoingleft = false;
 }
 
-void Cactus::update_pos(){
+void Bird::update_pos(){
   if (!isgoingleft){
     if (y > 0 ) {
       y--;

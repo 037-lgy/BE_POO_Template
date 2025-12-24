@@ -11,7 +11,7 @@ void Dino::jump(){
   if (!isjumping){
     if (!islanding){
       isjumping = true;
-      x--;
+      x = 0;
       jumptime = millis();
     }
   }
@@ -23,7 +23,7 @@ void Dino::update_jump(){
       isjumping = false;
       islanding = true;
       landtime = millis();
-      x++;
+      x = 1;
     }
   }
   else if (islanding){
@@ -35,8 +35,4 @@ void Dino::update_jump(){
 
 bool Dino::getisjumping(){
   return isjumping;
-}
-
-bool Dino::collision(){
-  return col;
 }

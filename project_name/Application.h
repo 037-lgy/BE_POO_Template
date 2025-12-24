@@ -15,6 +15,7 @@
 #include "Potentiometre.h"
 #include "Dino.h"
 #include "Cactus.h"
+#include "Bird.h"
 
 using namespace std;
 
@@ -44,7 +45,12 @@ class Application
 
     Dino* my_dino;
     Cactus* cactus1;
+    Bird* bird1;
+    Cactus* cactus2;
+    Bird* bird2;
     list<Game_Object *> my_objects;
+    unsigned long lastspawn;
+    int spawndelay;
   public :
     /**
      * @fn Application();
@@ -66,5 +72,8 @@ class Application
      * @brief Fonction de lancement de l'application
     */
     void run(void);
+    /**
+    */
+    void randomspawn();
 };
 #endif

@@ -9,6 +9,7 @@
 #include "Game_Object.h"
 
 extern uint8_t dinodino[8];
+extern uint8_t dinodinolying[8];
 extern uint8_t cactus[8];
 extern uint8_t bird_wings_down[8];
 extern uint8_t bird_wings_up[8];
@@ -35,6 +36,7 @@ class LCD : public Actuators{
     void setcouleur(int r, int g, int b); //Mettre à jour les couleurs de l'écran
     void resetmatrice();
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd
+    bool collision(Game_Object* obj1, Game_Object* obj2);
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert
     int getb(); //Récupérer le niveau de bleu
