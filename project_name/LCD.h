@@ -11,8 +11,11 @@
 extern uint8_t dinodino[8];
 extern uint8_t dinodinolying[8];
 extern uint8_t cactus[8];
-extern uint8_t bird_wings_down[8];
-extern uint8_t bird_wings_up[8];
+extern uint8_t cactus_mid_left[8];
+extern uint8_t cactus_mid_right[8];
+extern uint8_t bird[8];
+extern uint8_t bird_mid_left[8];
+extern uint8_t bird_mid_right[8];
 
 enum mode{MENU, JEU, OVER};
 

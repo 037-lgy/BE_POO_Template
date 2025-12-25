@@ -1,17 +1,13 @@
+#include <stdint.h>
 #ifndef CACTUS_H_
 #define CACTUS_H_
 
-#include "Game_Object.h"
+#include "enemy_objects.h"
 
-class Cactus : public Game_Object{
-  private:
-    bool isgoingleft;
-    unsigned long gotime;
+class Cactus : public Enemy_objects{
   public:
     Cactus(uint8_t* tab, int x, int y);
     ~Cactus();
-    void update_pos(); // Pas besoin de update left et goleft je pense, seulement celle ci mais à checker en réel
-    void spawn();
 };
 
 #endif

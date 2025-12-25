@@ -2,17 +2,12 @@
 #ifndef BIRD_H_
 #define BIRD_H_
 
-#include "Game_object.h"
+#include "enemy_objects.h"
 
-class Bird : public Game_Object{
-  private:
-    bool isgoingleft;
-    unsigned long gotime;
+class Bird : public Enemy_objects{
   public:
     Bird(uint8_t* tab, int x, int y);
     ~Bird();
-    void spawn(int x);
-    void update_pos();
 };
 
 #endif

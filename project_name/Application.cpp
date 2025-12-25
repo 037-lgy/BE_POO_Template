@@ -39,9 +39,9 @@ Application::Application()
 
   my_dino = new Dino(dinodino, 1, 4);
   cactus1 = new Cactus(cactus, 1, 15);
-  bird1 = new Bird(bird_wings_down, 0, -10);
-  cactus2 = new Cactus(cactus,1,-10);
-  bird2 = new Bird(bird_wings_down, 0, -10);
+  bird1 = new Bird(bird, 0, -10);
+  cactus2 = new Cactus(cactus, 1, -10);
+  bird2 = new Bird(bird, 0, -10);
   my_objects.push_back(my_dino);
   my_objects.push_back(cactus1);
   my_objects.push_back(bird1);
@@ -79,10 +79,10 @@ void Application::randomspawn(){
     int choice = random(3);
     if (choice == 0){
       if (cactus1->gety() == -1){
-        cactus1->spawn();
+        cactus1->spawn(1);
       }
       else if (cactus2->gety() == -1) {
-        cactus2->spawn();
+        cactus2->spawn(1);
       }
     }
     else if (choice == 1){
@@ -114,31 +114,37 @@ void Application::run(void) {
     }
     else if (previousstate != EN_ATTENTE){
       my_screen->waiting_screen();
+      my_dino->changeshape(dinodino);
       led2->set_off();
       led1->set_on();
       my_dino->setpos(1, 4);
       cactus1->setpos(1, 15);
-      bird1->setpos(0, -1);
-      cactus2->setpos(1, -1);
-      bird2->setpos(0, -1);
+      bird1->setpos(0, -2);
+      cactus2->setpos(1, -2);
+      bird2->setpos(1, -2);
       previousstate = EN_ATTENTE;
     }
   }
   else if (currentstate == EN_JEU) {
     led1->set_off();
     randomspawn();
-    if(button_orange->readsensor() == LOW || 
-    my_screen->collision(my_dino, cactus1) || 
+    if(my_screen->collision(my_dino, cactus1) || 
     my_screen->collision(my_dino, bird1) || 
     my_screen->collision(my_dino, cactus2) || 
     my_screen->collision(my_dino, bird2)){
       currentstate = GAME_OVER;
     }
     else {
-      if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping())){
+      if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping()) && button_orange->readsensor() == HIGH){
         my_dino->jump();
       }
-      my_screen->setcouleur(255, 255, 0);
+      else if (button_orange->readsensor() == LOW && button_rouge->readsensor() == HIGH){
+        my_dino->changeshape(dinodinolying);
+      }
+      else {
+        my_dino->changeshape(dinodino);
+      }
+      my_screen->setcouleur(120, 120, 120);
       my_screen->resetmatrice();
       my_dino->update_jump();
       cactus1->update_pos();

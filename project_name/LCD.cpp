@@ -11,7 +11,7 @@ uint8_t dinodino[8] = {
   0b00100, //   #
   0b11110, // ####
   0b01010, //  # #
-  0b01010 //  # #
+  0b01010  //  # #
 };
 
 uint8_t dinodinolying[8] = {
@@ -36,24 +36,57 @@ uint8_t cactus[8] = {
   0b00100 //   #
 };
 
-uint8_t bird_wings_down[8] = {
+uint8_t cactus_mid_left[8] = {
+  0b10000, // #
+  0b10000, // #
+  0b10000, // #
+  0b10100, // # #
+  0b11100, // ###
+  0b10000, // #
+  0b10000, // #
+  0b10000 //  #
+};
+
+uint8_t cactus_mid_right[8] = {
+  0b00001, //     #
+  0b00001, //     #
+  0b00011, //    ##
+  0b00111, //   ###
+  0b00111, //   ###
+  0b00001, //     #
+  0b00001, //     #
+  0b00001 //      #
+};
+
+uint8_t bird[8] = {
   0b00100, //   #
   0b00100, //   #
   0b10100, // # #
   0b11111, // #####
   0b01110, //  ###
-  0b00000, //   #
+  0b00000, //
   0b00000, //
   0b00000 //
 };
 
-uint8_t bird_wings_up[8] = {
-  0b00000, //
-  0b10100, // # #
-  0b01110, //  ###
-  0b11111, // #####
-  0b00100, //   #
-  0b00100, //   #
+uint8_t bird_mid_left[8] = {
+  0b10000, // #
+  0b10000, // #
+  0b10000, // #
+  0b11100, // ###
+  0b11000, // ##
+  0b10000, // #
+  0b000, //
+  0b000 //
+};
+
+uint8_t bird_mid_right[8] = {
+  0b00001, //     #
+  0b00001, //     #
+  0b00101, //   # #
+  0b00111, //   ###
+  0b00011, //    ##
+  0b00001, //     #
   0b00000, //
   0b00000 //
 };
@@ -76,9 +109,8 @@ void LCD::initialisation(){
   Serial.println(nom);
   screen.createChar(0, dinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
   screen.createChar(1, cactus);
-  screen.createChar(2, bird_wings_down);
-  screen.createChar(3, bird_wings_up);
-  screen.createChar(4, dinodinolying);
+  screen.createChar(2, bird);
+  screen.createChar(3, dinodinolying);
 }
 
 void LCD::waiting_screen(){
@@ -144,7 +176,7 @@ void LCD::update(){
           else if (matrice[i][j]->getshape() == cactus) {
             screen.write((uint8_t)1);
           }
-          else if (matrice[i][j]->getshape() == bird_wings_down) {
+          else if (matrice[i][j]->getshape() == bird) {
             screen.write((uint8_t)2);
           }
           else if (matrice[i][j]->getshape() == dinodinolying) {
@@ -166,7 +198,13 @@ void LCD::resetmatrice(){
 }
 
 bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
-  return (obj1->getx() == obj2->getx() && obj1->gety() == obj2->gety());
+  bool samecase = obj1->getx() == obj2->getx() && obj1->gety() == obj2->gety();
+  bool samebit = false;
+  for (int i = 0; i < 8; i++) {
+    samebit |= obj1->getshape()[i] & obj2->getshape()[i];
+  }
+  if (obj1->getshape() == dinodinolying || obj1->getshape() == dinodino) return (samecase && samebit);
+  return false;
 }
 
 void LCD::setcouleur(int r, int g, int b){
