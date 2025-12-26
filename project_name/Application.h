@@ -45,10 +45,6 @@ class Application
     state previousstate; //Pour éviter de réafficher en boucle le même texte
 
     Dino* my_dino;
-    //Cactus* cactus1;
-    //Bird* bird1;
-    //Cactus* cactus2;
-    //Bird* bird2;
     Enemy_objects* cactus1;
     Enemy_objects* cactus2;
     Enemy_objects* bird1;

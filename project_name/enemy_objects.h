@@ -9,13 +9,13 @@ class Enemy_objects : public Game_Object{
     bool isgoingleft;
     unsigned long gotime;
     uint8_t* left_shape;
-    uint8_t* right_shape;
     int state;
   public:
     Enemy_objects(uint8_t* tab, int x, int y);
-    Enemy_objects(uint8_t* shape, uint8_t* left_shape, uint8_t* right_shape, int x, int y);
+    Enemy_objects(uint8_t* shape, uint8_t* left_shape, int x, int y);
     ~Enemy_objects();
     void update_pos();
+    void update_pos_basic();
     void spawn(int x);
 };
 

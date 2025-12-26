@@ -42,17 +42,22 @@ Application::Application()
   //bird1 = new Bird(bird, 0, -10);
   //cactus2 = new Cactus(cactus, 1, -10);
   //bird2 = new Bird(bird, 0, -10);
-  cactus1 = new Enemy_objects(cactus, cactus_mid_left, cactus_mid_right, 1, 15);
-  cactus2 = new Enemy_objects(cactus, cactus_mid_left, cactus_mid_right, 1, -10);
-  bird1 = new Enemy_objects(bird, bird_mid_left, bird_mid_right, 0, -10);
-  bird2 = new Enemy_objects(bird, bird_mid_left, bird_mid_right, 1, -10);
+  //cactus1 = new Enemy_objects(cactus, cactus_mid_left, cactus_mid_right, 1, -1);
+  //cactus2 = new Enemy_objects(cactus, cactus_mid_left, cactus_mid_right, 1, -1);
+  //bird1 = new Enemy_objects(bird, bird_mid_left, bird_mid_right, 0, -1);
+  //bird2 = new Enemy_objects(bird, bird_mid_left, bird_mid_right, 1, -1);
+
+  cactus1 = new Enemy_objects(cactus, cactus_mid_left, 1, -1);
+  cactus2 = new Enemy_objects(cactus, cactus_mid_left, 1, -1);
+  bird1 = new Enemy_objects(bird, bird_mid_left, 0, -1);
+  bird2 = new Enemy_objects(bird, bird_mid_left, 1, -1);
   my_objects.push_back(my_dino);
   my_objects.push_back(cactus1);
   my_objects.push_back(bird1);
   my_objects.push_back(cactus2);
   my_objects.push_back(bird2);
 
-  spawndelay = 3000;
+  spawndelay = 5000;
 }
   
 Application::~Application()
@@ -82,26 +87,26 @@ void Application::randomspawn(){
   if ((millis() - lastspawn) >= spawndelay){
     int choice = random(3);
     if (choice == 0){
-      if (cactus1->gety() <= -1){
+      if (cactus1->gety() == -1){
         cactus1->spawn(1);
       }
-      else if (cactus2->gety() <= -1) {
+      else if (cactus2->gety() == -1) {
         cactus2->spawn(1);
       }
     }
     else if (choice == 1){
-      if (bird1->gety() <= -1){
+      if (bird1->gety() == -1){
         bird1->spawn(0);
       }
-      else if (bird2->gety() <= -1) {
+      else if (bird2->gety() == -1) {
         bird2->spawn(0);
       }
     }
     else if (choice == 2){
-      if (bird1->gety() <= -1){
+      if (bird1->gety() == -1){
         bird1->spawn(1);
       }
-      else if (bird2->gety() <= -1) {
+      else if (bird2->gety() == -1) {
         bird2->spawn(1);
       }
     }
@@ -122,10 +127,10 @@ void Application::run(void) {
       led2->set_off();
       led1->set_on();
       my_dino->setpos(1, 4);
-      cactus1->setpos(1, 15);
-      bird1->setpos(0, -10);
-      cactus2->setpos(1, -10);
-      bird2->setpos(1, -10);
+      cactus1->setpos(1, -1);
+      bird1->setpos(0, -1);
+      cactus2->setpos(1, -1);
+      bird2->setpos(1, -1);
       previousstate = EN_ATTENTE;
     }
   }

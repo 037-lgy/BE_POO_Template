@@ -36,7 +36,7 @@ uint8_t cactus[8] = {
   0b00100 //   #
 };
 
-uint8_t cactus_mid_left[8] = {
+uint8_t cactus_mid_right[8] = {
   0b10000, // #
   0b10000, // #
   0b10000, // #
@@ -47,7 +47,7 @@ uint8_t cactus_mid_left[8] = {
   0b10000 //  #
 };
 
-uint8_t cactus_mid_right[8] = {
+uint8_t cactus_mid_left[8] = {
   0b00001, //     #
   0b00001, //     #
   0b00011, //    ##
@@ -69,7 +69,7 @@ uint8_t bird[8] = {
   0b00000 //
 };
 
-uint8_t bird_mid_left[8] = {
+uint8_t bird_mid_right[8] = {
   0b10000,
   0b10000,
   0b10000,
@@ -80,7 +80,7 @@ uint8_t bird_mid_left[8] = {
   0b00000
 };
 
-uint8_t bird_mid_right[8] = {
+uint8_t bird_mid_left[8] = {
   0b00001,
   0b00001,
   0b00101,
@@ -111,10 +111,10 @@ void LCD::initialisation(){
   screen.createChar(1, cactus);
   screen.createChar(2, bird);
   screen.createChar(3, dinodinolying);
-  screen.createChar(4, cactus_mid_left);
-  screen.createChar(5, cactus_mid_right);
-  screen.createChar(6, bird_mid_left);
-  screen.createChar(7, bird_mid_right);
+  screen.createChar(4, cactus_mid_right);
+  screen.createChar(5, cactus_mid_left);
+  screen.createChar(6, bird_mid_right);
+  screen.createChar(7, bird_mid_left);
 }
 
 void LCD::waiting_screen(){
@@ -174,41 +174,45 @@ void LCD::update(){
       for (int j = 0; j < 16; j++){
         screen.setCursor(j,i);
         if (matrice[i][j] != nullptr){
-          if (matrice[i][j]->getshape() == dinodino){
+          uint8_t* object = matrice[i][j]->getshape();
+          if (object == dinodino){
             screen.write((uint8_t)0);
           }
-          else if (matrice[i][j]->getshape() == cactus) {
+          else if (object == cactus) {
             screen.write((uint8_t)1);
           }
-          else if (matrice[i][j]->getshape() == bird) {
+          else if (object == bird) {
             screen.write((uint8_t)2);
           }
-          else if (matrice[i][j]->getshape() == dinodinolying) {
+          else if (object == dinodinolying) {
             screen.write((uint8_t)3);
           }
-          else if (matrice[i][j]->getshape() == cactus_mid_left) {
-            screen.write((uint8_t)4);
-          }
-          else if (matrice[i][j]->getshape() == cactus_mid_right){
+          // Pour amméliorer la résolution : 
+          // else if (object == cactus_mid_left) {
+          //   screen.write((uint8_t)4);
+          // }
+          // else if (object == bird_mid_left) {
+          //   screen.write((uint8_t)6);
+          // }
+          else if (object == cactus_mid_left) {
             screen.write((uint8_t)5);
           }
-          else if (matrice[i][j]->getshape() == bird_mid_left) {
-            screen.write((uint8_t)6);
-          }
-          else if (matrice[i][j]->getshape() == bird_mid_right) {
+          else if (object == bird_mid_left) {
             screen.write((uint8_t)7);
           }
         }
-        else { // Gestion pour ne pas efface la case dans le cas ou il y a la partie droite "fantome" à mettre
+        else { 
+          // Gestion pour ne pas efface la case dans le cas ou il y a la partie droite "fantome" à mettre
           bool skipprintnull = false;
-          if (matrice[i][j-1] != nullptr && j > 0){
-            if (matrice[i][j-1]->getshape() == cactus_mid_left){
+          if (j > 0 && matrice[i][j-1] != nullptr){
+            uint8_t* ghost = matrice[i][j-1]->getshape();
+            if (ghost == cactus_mid_left){
+              screen.write((uint8_t)4);
               skipprintnull = true;
-              screen.write((uint8_t)5);
             }
-            else if (matrice[i][j-1]->getshape() == bird_mid_left){
+            else if (ghost == bird_mid_left){
+              screen.write((uint8_t)6);
               skipprintnull = true;
-              screen.write((uint8_t)7);
             }
           }
           if (!skipprintnull) screen.print(" ");
