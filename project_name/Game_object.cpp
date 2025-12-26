@@ -1,6 +1,6 @@
 #include "Game_object.h"
 
-Game_Object::Game_Object(uint8_t* tab, int x, int y):shape(tab),x(x),y(y){}
+Game_Object::Game_Object(uint8_t* tab, int x, int y):full_shape(tab),x(x),y(y), currentshape(tab){}
 
 Game_Object::~Game_Object(){
 
@@ -20,9 +20,9 @@ int Game_Object::gety(){
 }
 
 uint8_t* Game_Object::getshape(){
-  return this->shape;
+  return this->currentshape;
 }
 
 void Game_Object::changeshape(uint8_t *tab){
-  this->shape = tab;
+  this->currentshape = tab;
 }

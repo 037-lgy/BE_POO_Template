@@ -70,25 +70,25 @@ uint8_t bird[8] = {
 };
 
 uint8_t bird_mid_left[8] = {
-  0b10000, // #
-  0b10000, // #
-  0b10000, // #
-  0b11100, // ###
-  0b11000, // ##
-  0b10000, // #
-  0b000, //
-  0b000 //
+  0b10000,
+  0b10000,
+  0b10000,
+  0b11100,
+  0b11000,
+  0b00000,
+  0b00000,
+  0b00000
 };
 
 uint8_t bird_mid_right[8] = {
-  0b00001, //     #
-  0b00001, //     #
-  0b00101, //   # #
-  0b00111, //   ###
-  0b00011, //    ##
-  0b00001, //     #
-  0b00000, //
-  0b00000 //
+  0b00001,
+  0b00001,
+  0b00101,
+  0b00111,
+  0b00011,
+  0b00000,
+  0b00000,
+  0b00000
 };
 
 LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
@@ -111,6 +111,10 @@ void LCD::initialisation(){
   screen.createChar(1, cactus);
   screen.createChar(2, bird);
   screen.createChar(3, dinodinolying);
+  screen.createChar(4, cactus_mid_left);
+  screen.createChar(5, cactus_mid_right);
+  screen.createChar(6, bird_mid_left);
+  screen.createChar(7, bird_mid_right);
 }
 
 void LCD::waiting_screen(){
@@ -180,10 +184,35 @@ void LCD::update(){
             screen.write((uint8_t)2);
           }
           else if (matrice[i][j]->getshape() == dinodinolying) {
+            screen.write((uint8_t)3);
+          }
+          else if (matrice[i][j]->getshape() == cactus_mid_left) {
             screen.write((uint8_t)4);
           }
+          else if (matrice[i][j]->getshape() == cactus_mid_right){
+            screen.write((uint8_t)5);
+          }
+          else if (matrice[i][j]->getshape() == bird_mid_left) {
+            screen.write((uint8_t)6);
+          }
+          else if (matrice[i][j]->getshape() == bird_mid_right) {
+            screen.write((uint8_t)7);
+          }
         }
-        else screen.print(" ");
+        else { // Gestion pour ne pas efface la case dans le cas ou il y a la partie droite "fantome" à mettre
+          bool skipprintnull = false;
+          if (matrice[i][j-1] != nullptr && j > 0){
+            if (matrice[i][j-1]->getshape() == cactus_mid_left){
+              skipprintnull = true;
+              screen.write((uint8_t)5);
+            }
+            else if (matrice[i][j-1]->getshape() == bird_mid_left){
+              skipprintnull = true;
+              screen.write((uint8_t)7);
+            }
+          }
+          if (!skipprintnull) screen.print(" ");
+        }
       }
     }
   }

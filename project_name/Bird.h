@@ -2,7 +2,7 @@
 #ifndef BIRD_H_
 #define BIRD_H_
 
-#include "enemy_objects.h"
+#include "Enemy_objects.h"
 
 class Bird : public Enemy_objects{
   public:

@@ -7,9 +7,10 @@
 
 class Game_Object{
   protected:
-    uint8_t* shape; // Forme d' l'objet (8 objets maximum)
+    uint8_t* full_shape; // Forme d' l'objet (8 objets maximum)
     int x; //Ligne sur le lcd
     int y; //Colonne sur le lcd
+    uint8_t* currentshape;
   public:
     Game_Object(uint8_t* tab, int x, int y);
     ~Game_Object();

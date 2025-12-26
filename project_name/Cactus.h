@@ -2,7 +2,7 @@
 #ifndef CACTUS_H_
 #define CACTUS_H_
 
-#include "enemy_objects.h"
+#include "Enemy_objects.h"
 
 class Cactus : public Enemy_objects{
   public:
