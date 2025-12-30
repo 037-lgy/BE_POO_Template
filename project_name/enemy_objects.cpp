@@ -1,19 +1,9 @@
-#include "enemy_objects.h"
+#include "Enemy_objects.h"
 
 Enemy_objects::Enemy_objects(uint8_t* tab, int x, int y):Game_Object(tab, x, y),isgoingleft(false), gotime((unsigned long)0){}
 
-//Enemy_objects::Enemy_objects(uint8_t* shape, uint8_t* left_shape, uint8_t* right_shape, int x, int y):
-//  Game_Object(shape, x, y),left_shape(left_shape),right_shape(right_shape), isgoingleft(false), gotime((unsigned long)0), state((int)0){}
-
 Enemy_objects::Enemy_objects(uint8_t* shape, uint8_t* left_shape, int x, int y):
   Game_Object(shape, x, y),left_shape(left_shape), isgoingleft(false), gotime((unsigned long)0), state((int)0){}
-
-void Enemy_objects::spawn(int x){
-  this->x = x;
-  y = 15;
-  state = 0;
-  isgoingleft = false;
-}
 
 void Enemy_objects::update_pos(){
   if (y >= 0 ) {
@@ -53,4 +43,11 @@ void Enemy_objects::update_pos_basic(){
       isgoingleft = false;
     }
   }
+}
+
+void Enemy_objects::spawn(int x){
+  this->x = x;
+  y = 15;
+  state = 0;
+  isgoingleft = false;
 }

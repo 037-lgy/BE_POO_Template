@@ -14,8 +14,6 @@
 #include "Button.h"
 #include "Potentiometre.h"
 #include "Dino.h"
-#include "Cactus.h"
-#include "Bird.h"
 #include "Enemy_objects.h"
 
 using namespace std;
