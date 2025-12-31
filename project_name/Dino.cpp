@@ -17,7 +17,7 @@ void Dino::jump(){
   }
 }
 
-void Dino::update_jump(){
+void Dino::update_pos_basic(){
   if (isjumping){
     if ((millis() - jumptime) >= 500){
       isjumping = false;
@@ -35,4 +35,13 @@ void Dino::update_jump(){
 
 bool Dino::getisjumping(){
   return isjumping;
+}
+
+void Dino::reset(int x, int y){
+  this->x = x;
+  this->y = y;
+  islanding = false;
+  isjumping = false;
+  landtime = 0;
+  jumptime = 0;
 }

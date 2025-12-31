@@ -9,8 +9,11 @@
 #include "Game_Object.h"
 
 extern uint8_t dinodino[8];
-extern uint8_t dinodinolying[8];
+extern uint8_t dinoflip[8];
+extern uint8_t dinodinolyingdown[8];
 extern uint8_t cactus[8];
+extern uint8_t powerup[8];
+
 extern uint8_t cactus_mid_left[8];
 extern uint8_t cactus_mid_right[8];
 extern uint8_t bird[8];
@@ -40,6 +43,8 @@ class LCD : public Actuators{
     void resetmatrice();
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd
     bool collision(Game_Object* obj1, Game_Object* obj2);
+    void desplayscore(int s);
+    std::array<std::array<Game_Object*, 16>, 2> getmatrice();
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert
     int getb(); //Récupérer le niveau de bleu

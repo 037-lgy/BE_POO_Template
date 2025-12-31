@@ -39,9 +39,12 @@ void Enemy_objects::update_pos_basic(){
       gotime = millis();
       y--;
     }
-    else if (millis() - gotime >= 150){
+    else if (millis() - gotime >= 200){
       isgoingleft = false;
     }
+  }
+  else {
+    isgoingleft = false;
   }
 }
 
@@ -50,4 +53,11 @@ void Enemy_objects::spawn(int x){
   y = 15;
   state = 0;
   isgoingleft = false;
+}
+
+void Enemy_objects::reset(int x, int y){
+  this->x = x;
+  this->y = y;
+  isgoingleft = false;
+  gotime = 0;
 }

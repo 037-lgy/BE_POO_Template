@@ -18,7 +18,7 @@
 
 using namespace std;
 
-enum state{EN_ATTENTE, EN_JEU, GAME_OVER};
+enum state{EN_ATTENTE, EN_JEU, NEW_MODE, GAME_OVER};
 
 /**
   * @class Application
@@ -47,9 +47,14 @@ class Application
     Enemy_objects* cactus2;
     Enemy_objects* bird1;
     Enemy_objects* bird2;
+    Enemy_objects* my_powerup;
     list<Game_Object *> my_objects;
+
     unsigned long lastspawn;
     int spawndelay;
+    int score;
+    unsigned long starttime;
+    unsigned long lastime;
   public :
     /**
      * @fn Application();
@@ -73,6 +78,10 @@ class Application
     void run(void);
     /**
     */
-    void randomspawn();
+    void randomspawn_mode1();
+
+    void randomspawn_mode2();
+
+    void updatescore();
 };
 #endif

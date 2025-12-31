@@ -14,7 +14,18 @@ uint8_t dinodino[8] = {
   0b01010  //  # #
 };
 
-uint8_t dinodinolying[8] = {
+uint8_t dinoflip[8] = {
+  0b01010, //  # # 
+  0b01010, //  # # 
+  0b11110, // #### 
+  0b00100, //   # 
+  0b00111, //   ###
+  0b00101, //   # #
+  0b00111, //   ###
+  0b00000
+};
+
+uint8_t dinodinolyingdown[8] = {
   0b00000,
   0b00000, //
   0b00000, //
@@ -22,7 +33,7 @@ uint8_t dinodinolying[8] = {
   0b00000, //
   0b11111, // #####
   0b10101, // # # #
-  0b10111 //  # ###
+  0b10111  // # ###
 };
 
 uint8_t cactus[8] = {
@@ -33,7 +44,7 @@ uint8_t cactus[8] = {
   0b11111, // #####
   0b00100, //   #
   0b00100, //   #
-  0b00100 //   #
+  0b00100  //   #
 };
 
 uint8_t cactus_mid_right[8] = {
@@ -91,6 +102,17 @@ uint8_t bird_mid_left[8] = {
   0b00000
 };
 
+uint8_t powerup[8] = {
+  0b00111,
+  0b00111,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000
+};
+
 LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
 
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
@@ -110,11 +132,16 @@ void LCD::initialisation(){
   screen.createChar(0, dinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
   screen.createChar(1, cactus);
   screen.createChar(2, bird);
-  screen.createChar(3, dinodinolying);
-  screen.createChar(4, cactus_mid_right);
-  screen.createChar(5, cactus_mid_left);
-  screen.createChar(6, bird_mid_right);
-  screen.createChar(7, bird_mid_left);
+  screen.createChar(3, dinodinolyingdown);
+
+  screen.createChar(4, powerup);
+  screen.createChar(5, dinoflip);
+
+  // Si on veut changer la fluidité de l'écran
+  //screen.createChar(4, cactus_mid_right);
+  //screen.createChar(5, cactus_mid_left);
+  //screen.createChar(6, bird_mid_right);
+  //screen.createChar(7, bird_mid_left);
 }
 
 void LCD::waiting_screen(){
@@ -133,15 +160,12 @@ void LCD::waiting_screen(){
 
 void LCD::ending_screen(){
   screen.clear();
-  ligne0 = "GAME OVER !!";
-  ligne1 = "press orange";
+  ligne0 = "GAME OVER:push o";
   this->setcouleur(255, 0, 0);
   this->resetmatrice();
   screen.setCursor(0,0);
   screen.setRGB(r, g, b);
   screen.print(ligne0);
-  screen.setCursor(0,1);
-  screen.print(ligne1);
   currentmode = OVER;
 }
 
@@ -166,9 +190,12 @@ void LCD::start(){
 
 void LCD::update(){
   if (currentmode == MENU || currentmode == OVER){
-
+    // screen.setCursor(0,0);
+    // screen.print(ligne0);
+    // screen.setCursor(0,1);
+    // screen.print(ligne1);
   }
-  else {
+  else { 
     screen.setRGB(r,g,b);
     for (int i = 0; i < 2; i++){
       for (int j = 0; j < 16; j++){
@@ -184,16 +211,16 @@ void LCD::update(){
           else if (object == bird) {
             screen.write((uint8_t)2);
           }
-          else if (object == dinodinolying) {
+          else if (object == dinodinolyingdown) {
             screen.write((uint8_t)3);
           }
-          // Pour amméliorer la résolution : 
-          // else if (object == cactus_mid_left) {
-          //   screen.write((uint8_t)4);
-          // }
-          // else if (object == bird_mid_left) {
-          //   screen.write((uint8_t)6);
-          // }
+          else if (object == powerup){
+            screen.write((uint8_t)4);
+          }
+          else if (object == dinoflip){
+            screen.write((uint8_t)5);
+          }
+          // Pour amméliorer la résolution :
           else if (object == cactus_mid_left) {
             screen.write((uint8_t)5);
           }
@@ -231,12 +258,13 @@ void LCD::resetmatrice(){
 }
 
 bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
+  if (obj2->gety() < 0 || obj2->gety() >15) return false;
   bool samecase = obj1->getx() == obj2->getx() && obj1->gety() == obj2->gety();
   bool samebit = false;
   for (int i = 0; i < 8; i++) {
     samebit |= obj1->getshape()[i] & obj2->getshape()[i];
   }
-  if (obj1->getshape() == dinodinolying || obj1->getshape() == dinodino) return (samecase && samebit);
+  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino) return (samecase && samebit);
   return false;
 }
 
@@ -246,10 +274,20 @@ void LCD::setcouleur(int r, int g, int b){
   this->b = b;
 }
 
+void LCD::desplayscore(int s){
+  ligne1 = "score : "+ (String)s;
+  screen.setCursor(0,1);
+  screen.print(ligne1);
+}
+
 int LCD::getr() {return r;}
 int LCD::getb() {return b;}
 int LCD::getg() {return g;}
 
+std::array<std::array<Game_Object*, 16>, 2> LCD::getmatrice(){
+  return matrice;
+}
+
 void LCD::setmatrice(Game_Object* obj, int x, int y){
-  if (y >= 0) matrice[x][y] = obj;
+  if (y >= 0 && y < 16 && x >= 0 && x < 2) matrice[x][y] = obj;
 }
