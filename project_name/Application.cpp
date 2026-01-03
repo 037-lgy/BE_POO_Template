@@ -20,7 +20,7 @@ Application::Application()
   led1 = new LED("led_bouton1", D5);
   led2 = new LED("led_bouton2", D0);
   led3 = new LED("led_simple", D7);
-  buzzer = new Buzzer("Buzzer", D4); //A voir sur quel port le mettre ? D4 pourrait fonctionner mais après le téléversement
+  buzzer = new Buzzer("Buzzer", D9); //A voir sur quel port le mettre ? D4 pourrait fonctionner mais après le téléversement
   my_actuators.push_back(my_screen);
   my_actuators.push_back(led1);
   my_actuators.push_back(led2);
@@ -214,6 +214,7 @@ void Application::run(void) {
     else {
       randomspawn_mode1();
       updatescore();
+      if (buzzer->getstate == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (button_orange->readsensor() == LOW && button_rouge->readsensor() == HIGH && (!my_dino->getisjumping())){
         my_dino->changeshape(dinodinolyingdown);
       }
@@ -221,6 +222,7 @@ void Application::run(void) {
         my_dino->changeshape(dinodino);
       }
       if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping()) && button_orange->readsensor() == HIGH){
+        buzzer->set_on();
         my_dino->jump();
       }
       my_screen->resetmatrice();
@@ -271,6 +273,7 @@ void Application::run(void) {
       my_screen->ending_screen();
       my_screen->desplayscore(score);
       previousstate = GAME_OVER;
+      starttime = millis();
     }
     else if (button_orange->readsensor() == LOW && (millis() - starttime) > 1500){
       currentstate = EN_ATTENTE;
