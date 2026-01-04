@@ -264,7 +264,7 @@ bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
   for (int i = 0; i < 8; i++) {
     samebit |= obj1->getshape()[i] & obj2->getshape()[i];
   }
-  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino) return (samecase && samebit);
+  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino || dinoflip) return (samecase && samebit);
   return false;
 }
 

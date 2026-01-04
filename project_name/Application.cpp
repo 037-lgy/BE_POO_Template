@@ -222,7 +222,6 @@ void Application::run(void) {
       if (millis() - scorerefreshing > 500){ 
         my_screen->continuousscore(score);
         scorerefreshing = millis();
-        Serial.println(intensite);
         if (intensite > 150) intensite--;
         else if (spawndelay > 1000) spawndelay = spawndelay - 100;
       }
@@ -256,10 +255,8 @@ void Application::run(void) {
     my_screen->collision(my_dino, cactus2) || 
     my_screen->collision(my_dino, bird2))){
       currentstate = GAME_OVER;
-      Serial.println(spawndelay);
       spawndelay = 4000;
       intensite = 200;
-
     }
     else {
       randomspawn_mode2();
@@ -267,7 +264,6 @@ void Application::run(void) {
       if (millis() - scorerefreshing > 500){ 
         my_screen->continuousscore(score);
         scorerefreshing = millis();
-        Serial.println(intensite);
       }
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
@@ -282,7 +278,7 @@ void Application::run(void) {
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
         objects->update_pos_basic(intensite);
       }
-      if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr)){
+      if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr) && (my_screen->getmatrice()[1][5] == nullptr)){
         currentstate = EN_JEU;
       }
     }
