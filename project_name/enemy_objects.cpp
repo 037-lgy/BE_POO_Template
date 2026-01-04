@@ -31,7 +31,7 @@ void Enemy_objects::update_pos(){
   }
 }
 
-void Enemy_objects::update_pos_basic(){
+void Enemy_objects::update_pos_basic(int Intensity){
   if (y >= 0 ) {
     if (!isgoingleft){
       currentshape = full_shape;
@@ -39,7 +39,7 @@ void Enemy_objects::update_pos_basic(){
       gotime = millis();
       y--;
     }
-    else if (millis() - gotime >= 200){
+    else if (millis() - gotime >= Intensity){
       isgoingleft = false;
     }
   }

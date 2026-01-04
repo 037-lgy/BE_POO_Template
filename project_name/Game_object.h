@@ -19,7 +19,8 @@ class Game_Object{
     int gety();
     uint8_t* getshape(); //getteur de la forme de l'objet
     void changeshape(uint8_t* tab);
-    virtual void update_pos_basic()= 0;
+    //virtual void update_pos_basic()= 0;
+    virtual void update_pos_basic(int intensity = -1)= 0;
     virtual void reset(int x, int y)= 0;
 };
 

@@ -52,9 +52,12 @@ class Application
 
     unsigned long lastspawn;
     int spawndelay;
+    int spawndelayMODE2;
     int score;
     unsigned long starttime;
     unsigned long lastime;
+    unsigned long scorerefreshing;
+    int intensite;
   public :
     /**
      * @fn Application();

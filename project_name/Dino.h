@@ -14,7 +14,7 @@ class Dino : public Game_Object{
     Dino(uint8_t* tab, int x, int y);
     ~Dino();
     void jump();
-    void update_pos_basic();
+    void update_pos_basic(int Intensity = -1);
     bool getisjumping();
     void reset(int x, int y);
 };

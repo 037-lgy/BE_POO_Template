@@ -15,7 +15,7 @@ class Enemy_objects : public Game_Object{
     Enemy_objects(uint8_t* shape, uint8_t* left_shape, int x, int y); //Seulement si on utilise le definlement en trois étapes
     ~Enemy_objects();
     void update_pos();
-    void update_pos_basic();
+    void update_pos_basic(int Intensity = -1);
     void spawn(int x);
     void reset(int x, int y);
 };

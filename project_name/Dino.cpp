@@ -17,7 +17,7 @@ void Dino::jump(){
   }
 }
 
-void Dino::update_pos_basic(){
+void Dino::update_pos_basic(int Intensity){
   if (isjumping){
     if ((millis() - jumptime) >= 500){
       isjumping = false;

@@ -44,6 +44,7 @@ class LCD : public Actuators{
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd
     bool collision(Game_Object* obj1, Game_Object* obj2);
     void desplayscore(int s);
+    void continuousscore(int s);
     std::array<std::array<Game_Object*, 16>, 2> getmatrice();
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert

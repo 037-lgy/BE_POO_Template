@@ -198,7 +198,7 @@ void LCD::update(){
   else { 
     screen.setRGB(r,g,b);
     for (int i = 0; i < 2; i++){
-      for (int j = 0; j < 16; j++){
+      for (int j = 3; j < 16; j++){
         screen.setCursor(j,i);
         if (matrice[i][j] != nullptr){
           uint8_t* object = matrice[i][j]->getshape();
@@ -251,7 +251,7 @@ void LCD::update(){
 
 void LCD::resetmatrice(){
   for (int i = 0; i < 2; i++){
-      for (int j = 0; j < 16; j++){
+      for (int j = 3; j < 16; j++){
         this->setmatrice(nullptr, i, j);
       }
   }
@@ -278,6 +278,29 @@ void LCD::desplayscore(int s){
   ligne1 = "score : "+ (String)s;
   screen.setCursor(0,1);
   screen.print(ligne1);
+}
+
+//Will
+void LCD::continuousscore(int s){
+  String Str = String(s/100);
+  if (Str.length() <= 1){
+    screen.setCursor(2, 0);
+    screen.write(Str[0]);
+  }
+  else if (Str.length() <= 2) {
+    screen.setCursor(2, 0);
+    screen.write(Str[1]);
+    screen.setCursor(1, 0);
+    screen.write(Str[0]);
+  }
+  else if (Str.length() <= 3) {
+    screen.setCursor(2, 0);
+    screen.write(Str[2]);
+    screen.setCursor(1, 0);
+    screen.write(Str[1]);
+    screen.setCursor(0, 0);
+    screen.write(Str[0]);
+  }
 }
 
 int LCD::getr() {return r;}
