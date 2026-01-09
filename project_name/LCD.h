@@ -41,6 +41,7 @@ class LCD : public Actuators{
     String ligne1;
     mode currentmode;
     bool darkmode;
+    bool dinounderbird;
   public:
     LCD(String name, uint8_t pin);
     LCD(String name, uint8_t pin, int x, int y, int z);
@@ -54,7 +55,8 @@ class LCD : public Actuators{
     void resetmatrice();
     void setmatrice(Game_Object* obj, int x, int y); //Change la matrice de l'écran lcd
     bool collision(Game_Object* obj1, Game_Object* obj2);
-    void desplayscore(int s);
+    void desplayscore(int s,int hs);
+    void affichedecompte(int i);
     void continuousscore(int s);
     std::array<std::array<Game_Object*, 16>, 2> getmatrice();
     int getr(); //Récupérer le niveau de rouge
@@ -65,6 +67,7 @@ class LCD : public Actuators{
     void setlightmode();
     void dynamic_memory();
     bool getdarkmode();
+    void toggledinounderbird();
 };
 
 #endif

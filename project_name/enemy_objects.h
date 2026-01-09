@@ -16,7 +16,7 @@ class Enemy_objects : public Game_Object{
     ~Enemy_objects();
     void update_pos();
     void update_pos_basic(int Intensity = -1);
-    void spawn(int x);
+    void spawn(int x, int y);
     void reset(int x, int y);
 };
 

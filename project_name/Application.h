@@ -45,8 +45,10 @@ class Application
     Dino* my_dino;
     Enemy_objects* cactus1;
     Enemy_objects* cactus2;
+    Enemy_objects* cactus3;
     Enemy_objects* bird1;
     Enemy_objects* bird2;
+    Enemy_objects* bird3;
     Enemy_objects* my_powerup;
     list<Game_Object *> my_objects;
 
@@ -54,10 +56,13 @@ class Application
     int spawndelay;
     int spawndelayMODE2;
     int score;
+    int highestscore;
+    int decompte;
     unsigned long starttime;
     unsigned long lastime;
     unsigned long scorerefreshing;
     unsigned long darkrefreshing;
+    unsigned long tempsdecompte;
     int intensite;
   public :
     /**

@@ -48,9 +48,9 @@ void Enemy_objects::update_pos_basic(int Intensity){
   }
 }
 
-void Enemy_objects::spawn(int x){
+void Enemy_objects::spawn(int x, int y = 15){
   this->x = x;
-  y = 15;
+  this->y = y;
   //state = 0;
   isgoingleft = false;
 }

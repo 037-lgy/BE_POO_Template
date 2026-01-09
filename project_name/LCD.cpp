@@ -58,6 +58,17 @@ uint8_t dinodinolyingdown[8] = {
   0b10111  // # ###
 };
 
+uint8_t dinobird[8] = {
+  0b00100, //   #
+  0b00100, //   #
+  0b10100, // # #
+  0b11111, // #####
+  0b01110, //  ###
+  0b11111, // #####
+  0b10101, // # # #
+  0b10111  // # ###
+};
+
 uint8_t blackdinodinolyingdown[8] = {
   0b11111,
   0b11111, //
@@ -195,6 +206,7 @@ LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
   darkmode = false;
+  dinounderbird = false;
 }
 
 LCD::~LCD(){
@@ -214,6 +226,7 @@ void LCD::initialisation(){
 
   screen.createChar(4, powerup);
   screen.createChar(5, dinoflip);
+  screen.createChar(6, dinobird);
 
   // Si on veut changer la fluidité de l'écran
   //screen.createChar(4, cactus_mid_right);
@@ -277,7 +290,7 @@ void LCD::update(){
     screen.setRGB(r,g,b);
     for (int i = 0; i < 2; i++){
       for (int j = 0; j < 16; j++){
-        if (i == 0 && (j == 0 || j == 1 || j ==2)){}
+        if ((i == 0 && (j == 0 || j == 1 || j ==2)) || (i == 1 && j == 0)){}
         else {
           screen.setCursor(j,i);
           if (matrice[i][j] != nullptr){
@@ -288,11 +301,16 @@ void LCD::update(){
             else if (object == cactus) {
               screen.write((uint8_t)1);
             }
-            else if (object == bird) {
+            else if (object == bird && !dinounderbird) {
               screen.write((uint8_t)2);
             }
-            else if (object == dinodinolyingdown) {
+            else if (object == dinodinolyingdown && !dinounderbird) {
               screen.write((uint8_t)3);
+            }
+            else if (object == dinodinolyingdown && dinounderbird) {
+              screen.write((uint8_t)6);
+              dinounderbird = false;
+              Serial.print("dino dessous oiseau");
             }
             else if (object == powerup){
               screen.write((uint8_t)4);
@@ -326,7 +344,10 @@ bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
   for (int i = 0; i < 8; i++) {
     samebit |= obj1->getshape()[i] & obj2->getshape()[i];
   }
-  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino || dinoflip) return (samecase && samebit);
+  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino || dinoflip) {
+    dinounderbird = samecase && !(samebit);
+    return (samecase && samebit);
+  }
   return false;
 }
 
@@ -336,13 +357,24 @@ void LCD::setcouleur(int r, int g, int b){
   this->b = b;
 }
 
-void LCD::desplayscore(int s){
-  ligne1 = "score : "+ (String)s;
+void LCD::desplayscore(int s,int hs){
+  ligne1 = "HI: "+ (String)hs + "   " + (String)s;
   screen.setCursor(0,1);
   screen.print(ligne1);
 }
 
-//Will
+void LCD::affichedecompte(int i){
+  if (i>9 || i <= 0){
+    screen.setCursor(0, 1);
+    screen.print(" ");
+  }
+  else{
+    screen.setCursor(0, 1);
+    ligne1 = (String)i;
+    screen.print(ligne1);
+  }
+}
+
 void LCD::continuousscore(int s){
   String Str = String(s/300);
   if (Str.length() <= 1){
@@ -401,6 +433,7 @@ void LCD::dynamic_memory(){
     screen.createChar(3, blackdinodinolyingdown);
     screen.createChar(4, blackpowerup);
     screen.createChar(5, blackdinoflip);
+    screen.createChar(6, dinobird);
   }
   else {
     screen.createChar(0, dinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
@@ -409,7 +442,12 @@ void LCD::dynamic_memory(){
     screen.createChar(3, dinodinolyingdown);
     screen.createChar(4, powerup);
     screen.createChar(5, dinoflip);
+    screen.createChar(6, dinobird);
   }
 }
 
 bool LCD::getdarkmode() {return darkmode;}
+
+void LCD::toggledinounderbird(){
+  dinounderbird = !(dinounderbird);
+}
