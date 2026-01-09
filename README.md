@@ -28,16 +28,12 @@ Dans l'état en jeu : mécaniques de jeu
 Il faudrait peut-être changer la matrice de l'écran pour prendre un type énuméré composé d'un objet et d'un char, si l'objet est nul, alors on affiche le char à la place.
 
 A améliorer :
-- Actualiser le score en haut à gauche en continu
 - Cactus (et bird) en doube
 - afficher meilleur score a la fin
-- changer le delay de spawn et la vitesse des objets
-- Voir quoi faire avec le potentiomètre
-- Mettre des pièces pour augmenter le score
-- Fonction pour la collision ?
+- potentiomère à corriger
+- centraliser collision
+- inverser les couleurs du jeu (createchar en dynamique) c'est fait, à voir pour repasser light mode après un certain temps
+- case qui combine dino et oiseau
+- afficher 10 9 8 7 dans new mode
 
 - Ne pas oublier de faire le destructeur !!!!
-
-Pour aller plus loin :
-- inverser les couleurs du jeu (createchar en dynamique)
-- Autre mode de jeu ??

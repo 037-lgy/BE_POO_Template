@@ -45,13 +45,6 @@ Application::Application()
   bird2 = new Enemy_objects(bird, 1, -1);
   my_powerup = new Enemy_objects(powerup, 0, -1);
 
-  // Initialisation si on veut utiliser l'affiche "plus" fluide
-  //cactus1 = new Enemy_objects(cactus, cactus_mid_left, 1, -1);
-  //cactus2 = new Enemy_objects(cactus, cactus_mid_left, 1, -1);
-  //bird1 = new Enemy_objects(bird, bird_mid_left, 0, -1);
-  //bird2 = new Enemy_objects(bird, bird_mid_left, 1, -1);
-
-
   my_objects.push_back(my_dino);
   my_objects.push_back(cactus1);
   my_objects.push_back(bird1);
@@ -65,6 +58,7 @@ Application::Application()
   score = 0;
   scorerefreshing = 0;
   intensite = 200;
+  darkrefreshing = 0;
 }
   
 Application::~Application()
@@ -125,7 +119,6 @@ void Application::randomspawn_mode1(){
       }
     }
     lastspawn = millis();
-    // Il faudra changer le delay de spawn suivant soit l'avancement dans le jeu, soit le potentiomètre
   }
 }
 
@@ -200,6 +193,8 @@ void Application::run(void) {
       starttime = millis();
       lastime = millis();
       lastspawn = millis();
+      darkrefreshing = millis();
+      my_screen->setlightmode();
       my_screen->setcouleur(120, 120, 120);
       led1->set_off();
       my_dino->reset(1, 4);
@@ -219,6 +214,17 @@ void Application::run(void) {
     else {
       randomspawn_mode1();
       updatescore();
+
+      if (millis() - darkrefreshing > 40000 && !(millis() - darkrefreshing > 50000)) my_screen->setdarkmode();
+      else if (millis() - darkrefreshing > 50000) my_screen->setlightmode();
+      //if (millis() - darkrefreshing > 40000) my_screen->setdarkmode();
+
+      // Changements à tester ici 
+      if (potentiometre->readsensor() < 256) my_screen->setcouleur(potentiometre->readsensor(), 0, 0);
+      else if (potentiometre->readsensor() < 511) my_screen->setcouleur(255, potentiometre->readsensor()-255, 0);
+      else my_screen->setcouleur(255, 255, potentiometre->readsensor()-510);
+      Serial.println(potentiometre->readsensor());
+
       if (millis() - scorerefreshing > 500){ 
         my_screen->continuousscore(score);
         scorerefreshing = millis();
@@ -261,6 +267,15 @@ void Application::run(void) {
     else {
       randomspawn_mode2();
       updatescore();
+
+      if (millis() - darkrefreshing > 40000 && !(millis() - darkrefreshing > 50000)) my_screen->setdarkmode();
+      else if (millis() - darkrefreshing > 50000) my_screen->setlightmode();
+
+      if (potentiometre->readsensor() < 256) my_screen->setcouleur(potentiometre->readsensor(), 0, 0);
+      else if (potentiometre->readsensor() < 511) my_screen->setcouleur(255, potentiometre->readsensor()-255, 0);
+      else my_screen->setcouleur(255, 255, potentiometre->readsensor()-510);
+
+
       if (millis() - scorerefreshing > 500){ 
         my_screen->continuousscore(score);
         scorerefreshing = millis();
@@ -286,7 +301,7 @@ void Application::run(void) {
   else if (currentstate == GAME_OVER) {
     if (previousstate != GAME_OVER){
       led2->set_on();
-      score = score/100;
+      score = score/300;
       my_screen->ending_screen();
       my_screen->desplayscore(score);
       previousstate = GAME_OVER;

@@ -14,6 +14,17 @@ uint8_t dinodino[8] = {
   0b01010  //  # #
 };
 
+uint8_t blackdinodino[8] = {
+  0b11111,
+  0b11000, //   ###
+  0b11010, //   # #
+  0b11000, //   ###
+  0b11011, //   #
+  0b00001, // ####
+  0b10101, //  # #
+  0b10101  //  # #
+};
+
 uint8_t dinoflip[8] = {
   0b01010, //  # # 
   0b01010, //  # # 
@@ -23,6 +34,17 @@ uint8_t dinoflip[8] = {
   0b00101, //   # #
   0b00111, //   ###
   0b00000
+};
+
+uint8_t blackdinoflip[8] = {
+  0b10101, //  # # 
+  0b10101, //  # # 
+  0b00001, // #### 
+  0b11011, //   # 
+  0b11000, //   ###
+  0b11010, //   # #
+  0b11000, //   ###
+  0b11111
 };
 
 uint8_t dinodinolyingdown[8] = {
@@ -36,6 +58,17 @@ uint8_t dinodinolyingdown[8] = {
   0b10111  // # ###
 };
 
+uint8_t blackdinodinolyingdown[8] = {
+  0b11111,
+  0b11111, //
+  0b11111, //
+  0b11111, //
+  0b11111, //
+  0b00000, // #####
+  0b01010, // # # #
+  0b01000  // # ###
+};
+
 uint8_t cactus[8] = {
   0b00100, //   #
   0b00100, //   #
@@ -45,6 +78,17 @@ uint8_t cactus[8] = {
   0b00100, //   #
   0b00100, //   #
   0b00100  //   #
+};
+
+uint8_t blackcactus[8] = {
+  0b11011, //   #
+  0b11011, //   #
+  0b10011, //  ##
+  0b00010, // ### #
+  0b00000, // #####
+  0b11011, //   #
+  0b11011, //   #
+  0b11011  //   #
 };
 
 uint8_t cactus_mid_right[8] = {
@@ -80,6 +124,17 @@ uint8_t bird[8] = {
   0b00000 //
 };
 
+uint8_t blackbird[8] = {
+  0b11011, //   #
+  0b11011, //   #
+  0b01011, // # #
+  0b00000, // #####
+  0b10001, //  ###
+  0b11111, //
+  0b11111, //
+  0b11111 //
+};
+
 uint8_t bird_mid_right[8] = {
   0b10000,
   0b10000,
@@ -113,10 +168,33 @@ uint8_t powerup[8] = {
   0b00000
 };
 
+uint8_t blackpowerup[8] = {
+  0b11000,
+  0b11000,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111
+};
+
+uint8_t dark[8] = {
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111
+};
+
 LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
 
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
+  darkmode = false;
 }
 
 LCD::~LCD(){
@@ -198,51 +276,35 @@ void LCD::update(){
   else { 
     screen.setRGB(r,g,b);
     for (int i = 0; i < 2; i++){
-      for (int j = 3; j < 16; j++){
-        screen.setCursor(j,i);
-        if (matrice[i][j] != nullptr){
-          uint8_t* object = matrice[i][j]->getshape();
-          if (object == dinodino){
-            screen.write((uint8_t)0);
-          }
-          else if (object == cactus) {
-            screen.write((uint8_t)1);
-          }
-          else if (object == bird) {
-            screen.write((uint8_t)2);
-          }
-          else if (object == dinodinolyingdown) {
-            screen.write((uint8_t)3);
-          }
-          else if (object == powerup){
-            screen.write((uint8_t)4);
-          }
-          else if (object == dinoflip){
-            screen.write((uint8_t)5);
-          }
-          // Pour amméliorer la résolution :
-          else if (object == cactus_mid_left) {
-            screen.write((uint8_t)5);
-          }
-          else if (object == bird_mid_left) {
-            screen.write((uint8_t)7);
-          }
-        }
-        else { 
-          // Gestion pour ne pas efface la case dans le cas ou il y a la partie droite "fantome" à mettre
-          bool skipprintnull = false;
-          if (j > 0 && matrice[i][j-1] != nullptr){
-            uint8_t* ghost = matrice[i][j-1]->getshape();
-            if (ghost == cactus_mid_left){
+      for (int j = 0; j < 16; j++){
+        if (i == 0 && (j == 0 || j == 1 || j ==2)){}
+        else {
+          screen.setCursor(j,i);
+          if (matrice[i][j] != nullptr){
+            uint8_t* object = matrice[i][j]->getshape();
+            if (object == dinodino){
+              screen.write((uint8_t)0);
+            }
+            else if (object == cactus) {
+              screen.write((uint8_t)1);
+            }
+            else if (object == bird) {
+              screen.write((uint8_t)2);
+            }
+            else if (object == dinodinolyingdown) {
+              screen.write((uint8_t)3);
+            }
+            else if (object == powerup){
               screen.write((uint8_t)4);
-              skipprintnull = true;
             }
-            else if (ghost == bird_mid_left){
-              screen.write((uint8_t)6);
-              skipprintnull = true;
+            else if (object == dinoflip){
+              screen.write((uint8_t)5);
             }
           }
-          if (!skipprintnull) screen.print(" ");
+          else {
+            if (darkmode) screen.write(uint8_t(255));
+            else if (!darkmode) screen.print(" ");
+          }
         }
       }
     }
@@ -251,7 +313,7 @@ void LCD::update(){
 
 void LCD::resetmatrice(){
   for (int i = 0; i < 2; i++){
-      for (int j = 3; j < 16; j++){
+      for (int j = 0; j < 16; j++){
         this->setmatrice(nullptr, i, j);
       }
   }
@@ -282,7 +344,7 @@ void LCD::desplayscore(int s){
 
 //Will
 void LCD::continuousscore(int s){
-  String Str = String(s/100);
+  String Str = String(s/300);
   if (Str.length() <= 1){
     screen.setCursor(2, 0);
     screen.write(Str[0]);
@@ -307,6 +369,8 @@ int LCD::getr() {return r;}
 int LCD::getb() {return b;}
 int LCD::getg() {return g;}
 
+rgb_lcd LCD::getscreen() {return screen;}
+
 std::array<std::array<Game_Object*, 16>, 2> LCD::getmatrice(){
   return matrice;
 }
@@ -314,3 +378,34 @@ std::array<std::array<Game_Object*, 16>, 2> LCD::getmatrice(){
 void LCD::setmatrice(Game_Object* obj, int x, int y){
   if (y >= 0 && y < 16 && x >= 0 && x < 2) matrice[x][y] = obj;
 }
+
+void LCD::setdarkmode(){
+  darkmode = true;
+  this->dynamic_memory();
+}
+
+void LCD::setlightmode(){
+  darkmode = false;
+  this->dynamic_memory();
+}
+
+void LCD::dynamic_memory(){
+  if (darkmode) {
+    screen.createChar(0, blackdinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
+    screen.createChar(1, blackcactus);
+    screen.createChar(2, blackbird);
+    screen.createChar(3, blackdinodinolyingdown);
+    screen.createChar(4, blackpowerup);
+    screen.createChar(5, blackdinoflip);
+  }
+  else {
+    screen.createChar(0, dinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
+    screen.createChar(1, cactus);
+    screen.createChar(2, bird);
+    screen.createChar(3, dinodinolyingdown);
+    screen.createChar(4, powerup);
+    screen.createChar(5, dinoflip);
+  }
+}
+
+bool LCD::getdarkmode() {return darkmode;}

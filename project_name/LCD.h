@@ -12,13 +12,23 @@ extern uint8_t dinodino[8];
 extern uint8_t dinoflip[8];
 extern uint8_t dinodinolyingdown[8];
 extern uint8_t cactus[8];
+extern uint8_t bird[8];
 extern uint8_t powerup[8];
 
-extern uint8_t cactus_mid_left[8];
-extern uint8_t cactus_mid_right[8];
-extern uint8_t bird[8];
-extern uint8_t bird_mid_left[8];
-extern uint8_t bird_mid_right[8];
+extern uint8_t blackdinodino[8];
+extern uint8_t blackdinoflip[8];
+extern uint8_t blackdinodinolyingdown[8];
+extern uint8_t blackcactus[8];
+extern uint8_t blackbird[8];
+extern uint8_t blackpowerup[8];
+
+extern uint8_t dark[8];
+
+
+// extern uint8_t cactus_mid_left[8];
+// extern uint8_t cactus_mid_right[8];
+// extern uint8_t bird_mid_left[8];
+// extern uint8_t bird_mid_right[8];
 
 enum mode{MENU, JEU, OVER};
 
@@ -30,6 +40,7 @@ class LCD : public Actuators{
     String ligne0;
     String ligne1;
     mode currentmode;
+    bool darkmode;
   public:
     LCD(String name, uint8_t pin);
     LCD(String name, uint8_t pin, int x, int y, int z);
@@ -49,6 +60,11 @@ class LCD : public Actuators{
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert
     int getb(); //Récupérer le niveau de bleu
+    rgb_lcd getscreen();
+    void setdarkmode();
+    void setlightmode();
+    void dynamic_memory();
+    bool getdarkmode();
 };
 
 #endif

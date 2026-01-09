@@ -57,6 +57,7 @@ class Application
     unsigned long starttime;
     unsigned long lastime;
     unsigned long scorerefreshing;
+    unsigned long darkrefreshing;
     int intensite;
   public :
     /**
