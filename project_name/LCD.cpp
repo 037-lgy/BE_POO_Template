@@ -380,13 +380,17 @@ void LCD::setmatrice(Game_Object* obj, int x, int y){
 }
 
 void LCD::setdarkmode(){
-  darkmode = true;
-  this->dynamic_memory();
+  if (!darkmode){
+    darkmode = true;
+    this->dynamic_memory();
+  }
 }
 
 void LCD::setlightmode(){
-  darkmode = false;
-  this->dynamic_memory();
+  if (darkmode){
+    darkmode = false;
+    this->dynamic_memory();
+  }
 }
 
 void LCD::dynamic_memory(){

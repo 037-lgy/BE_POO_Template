@@ -32,7 +32,6 @@ A améliorer :
 - afficher meilleur score a la fin
 - potentiomère à corriger
 - centraliser collision
-- inverser les couleurs du jeu (createchar en dynamique) c'est fait, à voir pour repasser light mode après un certain temps
 - case qui combine dino et oiseau
 - afficher 10 9 8 7 dans new mode
 

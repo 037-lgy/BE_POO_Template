@@ -215,8 +215,8 @@ void Application::run(void) {
       randomspawn_mode1();
       updatescore();
 
-      if (millis() - darkrefreshing > 40000 && !(millis() - darkrefreshing > 50000)) my_screen->setdarkmode();
-      else if (millis() - darkrefreshing > 50000) my_screen->setlightmode();
+      if (millis() - darkrefreshing > 10000 && (millis() - darkrefreshing < 10100)) my_screen->setdarkmode();
+      else if (millis() - darkrefreshing > 15000) my_screen->setlightmode();
       //if (millis() - darkrefreshing > 40000) my_screen->setdarkmode();
 
       // Changements à tester ici 
@@ -268,8 +268,8 @@ void Application::run(void) {
       randomspawn_mode2();
       updatescore();
 
-      if (millis() - darkrefreshing > 40000 && !(millis() - darkrefreshing > 50000)) my_screen->setdarkmode();
-      else if (millis() - darkrefreshing > 50000) my_screen->setlightmode();
+      if (millis() - darkrefreshing > 10000 && (millis() - darkrefreshing < 10100)) my_screen->setdarkmode();
+      else if (millis() - darkrefreshing > 15000) my_screen->setlightmode();
 
       if (potentiometre->readsensor() < 256) my_screen->setcouleur(potentiometre->readsensor(), 0, 0);
       else if (potentiometre->readsensor() < 511) my_screen->setcouleur(255, potentiometre->readsensor()-255, 0);
