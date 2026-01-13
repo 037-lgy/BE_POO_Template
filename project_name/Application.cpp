@@ -66,11 +66,20 @@ Application::Application()
   highestscore = 0;
 }
   
-Application::~Application()
+Application::~Application() 
 {
-  // Code
-  ;
-}  
+  for (Actuators* actuator : my_actuators) {
+    delete [] actuator;
+  }
+
+  for (Sensors* sensor : my_sensors) {
+    delete [] sensor;
+  }
+
+  for (Game_Object* objects : my_objects) {
+    delete [] objects;
+  }
+}
 
 void Application::init(void)
 {
