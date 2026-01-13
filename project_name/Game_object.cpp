@@ -3,7 +3,7 @@
 Game_Object::Game_Object(uint8_t* tab, int x, int y):full_shape(tab),x(x),y(y), currentshape(tab){}
 
 Game_Object::~Game_Object(){
-
+  
 }
 
 void Game_Object::setpos(int x, int y){

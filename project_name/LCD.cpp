@@ -201,8 +201,6 @@ uint8_t dark[8] = {
   0b11111
 };
 
-LCD::LCD(String name, uint8_t pin):Actuators(name, pin){}
-
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
   darkmode = false;
@@ -214,7 +212,7 @@ LCD::~LCD(){
 }
 
 void LCD::initialisation(){
-  //Wire.begin(4, 5);
+  //Wire.begin(4, 5); // POur initialiser la connexion I2C, déjà fait dans la fonction screen.begin(16,2)
   screen.begin(16,2);
   this->waiting_screen();
   Serial.print("Initialisation de l'écran : ");

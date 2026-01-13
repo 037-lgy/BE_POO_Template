@@ -9,11 +9,42 @@ class Enemy_objects : public Game_Object{
     bool isgoingleft;
     unsigned long gotime;
   public:
+    /**
+     *@fn Enemy_objects(uint8_t* tab, int x, int y)
+     *@brief Constructeur de la classe Enemy_objects
+     *@param tab forme à donner à notre Enemy_objects
+     *@param x Ligne du lcd sur laquelle l'objet est présent à sa construction
+     *@param y Colonne du lcd sur laquelle l'objet est présent à sa construction
+    */
     Enemy_objects(uint8_t* tab, int x, int y);
+
+    /**
+     *@fn ~Enemy_objects()
+     *@brief Destructeur de la classe Enemy_objects
+    */
     ~Enemy_objects();
-    void update_pos();
+
+    /**
+     *@fn void update_pos_basic(int Intensity = -1)
+     *@brief update la position de notre objet ennemi sur le lcd
+     *@param Intensity égale à -1 par défaut, utilisé ici pour augmenter la difficulté au cours du temps en augmentant la vitesse du l'objet sur le lcd
+    */
     void update_pos_basic(int Intensity = -1);
+
+    /**
+     *@fn void spawn(int x, int y);
+     *@brief fait spawn l'objet à la position (x,y) du lcd
+     *@param x la ligne sur laquelle l'objet spawn
+     *@param y la colonne sur laquelle l'objet spawn
+    */
     void spawn(int x, int y);
+
+    /**
+     *@fn void reset(int x, int y)
+     *@brief reset la position de l'objet ennemi dans le lcd
+     *@param x Ligne du lcd sur laquelle l'objet est reset
+     *@param y Colonne du lcd sur laquelle l'objet est reset
+    */
     void reset(int x, int y);
 };
 

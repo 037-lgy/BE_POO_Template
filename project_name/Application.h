@@ -85,8 +85,6 @@ class Application
      * @brief Fonction de lancement de l'application
     */
     void run(void);
-    /**
-    */
     void randomspawn_mode1();
 
     void randomspawn_mode2();

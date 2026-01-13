@@ -43,7 +43,6 @@ class LCD : public Actuators{
     bool darkmode;
     bool dinounderbird;
   public:
-    LCD(String name, uint8_t pin);
     LCD(String name, uint8_t pin, int x, int y, int z);
     ~LCD();
     void update();
@@ -59,15 +58,15 @@ class LCD : public Actuators{
     void affichedecompte(int i);
     void continuousscore(int s);
     std::array<std::array<Game_Object*, 16>, 2> getmatrice();
-    int getr(); //Récupérer le niveau de rouge
-    int getg(); //Récupérer le niveau de vert
-    int getb(); //Récupérer le niveau de bleu
     rgb_lcd getscreen();
     void setdarkmode();
     void setlightmode();
     void dynamic_memory();
-    bool getdarkmode();
     void toggledinounderbird();
+    bool getdarkmode();
+    int getr(); //Récupérer le niveau de rouge
+    int getg(); //Récupérer le niveau de vert
+    int getb(); //Récupérer le niveau de bleu
 };
 
 #endif
