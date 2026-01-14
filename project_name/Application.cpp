@@ -314,6 +314,7 @@ void Application::run(void) {
       my_dino->reset(0, 4);
       decompte = 9;
       tempsdecompte = millis();
+      buzzer->set_off();
     }
     else if ((millis() - starttime) > 500 && (my_screen->collision(my_dino, cactus1) || 
     my_screen->collision(my_dino, bird1) || 
@@ -338,7 +339,7 @@ void Application::run(void) {
       if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
       else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
       else my_screen->setcouleur(255, 255, (int) poten-512);
-
+      if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (millis() - tempsdecompte > 1000){
         Serial.print(decompte);
         my_screen->affichedecompte(decompte);
@@ -352,10 +353,12 @@ void Application::run(void) {
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
         my_dino->setpos(0, my_dino->gety());
+        buzzer->set_on();
       }
       else if (button_orange->readsensor() == LOW  && my_dino->getshape() != dinodino){
         my_dino->changeshape(dinodino);
         my_dino->setpos(1, my_dino->gety());
+        buzzer->set_on();
       }
       my_screen->resetmatrice();
       for (Game_Object* objects : my_objects) {
