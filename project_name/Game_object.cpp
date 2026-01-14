@@ -1,5 +1,16 @@
 #include "Game_object.h"
 
+uint8_t dark[8] = {
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111,
+  0b11111
+};
+
 Game_Object::Game_Object(uint8_t* tab, int x, int y):full_shape(tab),x(x),y(y), currentshape(tab){}
 
 Game_Object::~Game_Object(){

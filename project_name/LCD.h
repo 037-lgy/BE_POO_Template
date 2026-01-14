@@ -6,29 +6,10 @@
 #include "Actuators.h"
 #include <rgb_lcd.h>
 #include <array>
-#include "Game_Object.h"
-
-extern uint8_t dinodino[8];
-extern uint8_t dinoflip[8];
-extern uint8_t dinodinolyingdown[8];
-extern uint8_t cactus[8];
-extern uint8_t bird[8];
-extern uint8_t powerup[8];
-
-extern uint8_t blackdinodino[8];
-extern uint8_t blackdinoflip[8];
-extern uint8_t blackdinodinolyingdown[8];
-extern uint8_t blackcactus[8];
-extern uint8_t blackbird[8];
-extern uint8_t blackpowerup[8];
-
-extern uint8_t dark[8];
-
-
-// extern uint8_t cactus_mid_left[8];
-// extern uint8_t cactus_mid_right[8];
-// extern uint8_t bird_mid_left[8];
-// extern uint8_t bird_mid_right[8];
+#include "Dino.h"
+#include "Cactus.h"
+#include "Bird.h"
+#include "Powerup.h"
 
 enum mode{MENU, JEU, OVER};
 

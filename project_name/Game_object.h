@@ -5,6 +5,8 @@
 
 #include <Arduino.h>
 
+extern uint8_t dark[8];
+
 class Game_Object{
   protected:
     uint8_t* full_shape; // Forme d' l'objet (8 objets maximum)

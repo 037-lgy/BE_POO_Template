@@ -4,6 +4,13 @@
 #include "Game_Object.h"
 #include <Arduino.h>
 
+extern uint8_t dinodino[8];
+extern uint8_t dinoflip[8];
+extern uint8_t dinodinolyingdown[8];
+extern uint8_t blackdinodino[8];
+extern uint8_t blackdinoflip[8];
+extern uint8_t blackdinodinolyingdown[8];
+
 class Dino : public Game_Object{
   private:
     bool isjumping;

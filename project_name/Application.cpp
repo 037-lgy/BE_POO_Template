@@ -39,13 +39,13 @@ Application::Application()
 
   my_dino = new Dino(dinodino, 1, 4);
 
-  cactus1 = new Enemy_objects(cactus, 1, -1);
-  cactus2 = new Enemy_objects(cactus, 1, -1);
-  cactus3 = new Enemy_objects(cactus, 1, -1);
-  bird1 = new Enemy_objects(bird, 0, -1);
-  bird2 = new Enemy_objects(bird, 1, -1);
-  bird3 = new Enemy_objects(bird, 1, -1);
-  my_powerup = new Enemy_objects(powerup, 0, -1);
+  cactus1 = new Cactus();
+  cactus2 = new Cactus();
+  cactus3 = new Cactus();
+  bird1 = new Bird();
+  bird2 = new Bird();
+  bird3 = new Bird();
+  my_powerup = new Power_up();
 
   my_objects.push_back(my_dino);
   my_objects.push_back(cactus1);

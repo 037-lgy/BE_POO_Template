@@ -3,204 +3,6 @@
 #include "LCD.h"
 #include <Wire.h> // Pour la communication I2C
 
-uint8_t dinodino[8] = {
-  0b00000,
-  0b00111, //   ###
-  0b00101, //   # #
-  0b00111, //   ###
-  0b00100, //   #
-  0b11110, // ####
-  0b01010, //  # #
-  0b01010  //  # #
-};
-
-uint8_t blackdinodino[8] = {
-  0b11111,
-  0b11000, //   ###
-  0b11010, //   # #
-  0b11000, //   ###
-  0b11011, //   #
-  0b00001, // ####
-  0b10101, //  # #
-  0b10101  //  # #
-};
-
-uint8_t dinoflip[8] = {
-  0b01010, //  # # 
-  0b01010, //  # # 
-  0b11110, // #### 
-  0b00100, //   # 
-  0b00111, //   ###
-  0b00101, //   # #
-  0b00111, //   ###
-  0b00000
-};
-
-uint8_t blackdinoflip[8] = {
-  0b10101, //  # # 
-  0b10101, //  # # 
-  0b00001, // #### 
-  0b11011, //   # 
-  0b11000, //   ###
-  0b11010, //   # #
-  0b11000, //   ###
-  0b11111
-};
-
-uint8_t dinodinolyingdown[8] = {
-  0b00000,
-  0b00000, //
-  0b00000, //
-  0b00000, //
-  0b00000, //
-  0b11111, // #####
-  0b10101, // # # #
-  0b10111  // # ###
-};
-
-uint8_t dinobird[8] = {
-  0b00100, //   #
-  0b00100, //   #
-  0b10100, // # #
-  0b11111, // #####
-  0b01110, //  ###
-  0b11111, // #####
-  0b10101, // # # #
-  0b10111  // # ###
-};
-
-uint8_t blackdinodinolyingdown[8] = {
-  0b11111,
-  0b11111, //
-  0b11111, //
-  0b11111, //
-  0b11111, //
-  0b00000, // #####
-  0b01010, // # # #
-  0b01000  // # ###
-};
-
-uint8_t cactus[8] = {
-  0b00100, //   #
-  0b00100, //   #
-  0b01100, //  ##
-  0b11101, // ### #
-  0b11111, // #####
-  0b00100, //   #
-  0b00100, //   #
-  0b00100  //   #
-};
-
-uint8_t blackcactus[8] = {
-  0b11011, //   #
-  0b11011, //   #
-  0b10011, //  ##
-  0b00010, // ### #
-  0b00000, // #####
-  0b11011, //   #
-  0b11011, //   #
-  0b11011  //   #
-};
-
-uint8_t cactus_mid_right[8] = {
-  0b10000, // #
-  0b10000, // #
-  0b10000, // #
-  0b10100, // # #
-  0b11100, // ###
-  0b10000, // #
-  0b10000, // #
-  0b10000 //  #
-};
-
-uint8_t cactus_mid_left[8] = {
-  0b00001, //     #
-  0b00001, //     #
-  0b00011, //    ##
-  0b00111, //   ###
-  0b00111, //   ###
-  0b00001, //     #
-  0b00001, //     #
-  0b00001 //      #
-};
-
-uint8_t bird[8] = {
-  0b00100, //   #
-  0b00100, //   #
-  0b10100, // # #
-  0b11111, // #####
-  0b01110, //  ###
-  0b00000, //
-  0b00000, //
-  0b00000 //
-};
-
-uint8_t blackbird[8] = {
-  0b11011, //   #
-  0b11011, //   #
-  0b01011, // # #
-  0b00000, // #####
-  0b10001, //  ###
-  0b11111, //
-  0b11111, //
-  0b11111 //
-};
-
-uint8_t bird_mid_right[8] = {
-  0b10000,
-  0b10000,
-  0b10000,
-  0b11100,
-  0b11000,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-uint8_t bird_mid_left[8] = {
-  0b00001,
-  0b00001,
-  0b00101,
-  0b00111,
-  0b00011,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-uint8_t powerup[8] = {
-  0b00111,
-  0b00111,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000
-};
-
-uint8_t blackpowerup[8] = {
-  0b11000,
-  0b11000,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111
-};
-
-uint8_t dark[8] = {
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b11111
-};
-
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
   darkmode = false;
@@ -224,13 +26,6 @@ void LCD::initialisation(){
 
   screen.createChar(4, powerup);
   screen.createChar(5, dinoflip);
-  screen.createChar(6, dinobird);
-
-  // Si on veut changer la fluidité de l'écran
-  //screen.createChar(4, cactus_mid_right);
-  //screen.createChar(5, cactus_mid_left);
-  //screen.createChar(6, bird_mid_right);
-  //screen.createChar(7, bird_mid_left);
 }
 
 void LCD::waiting_screen(){
@@ -431,7 +226,6 @@ void LCD::dynamic_memory(){
     screen.createChar(3, blackdinodinolyingdown);
     screen.createChar(4, blackpowerup);
     screen.createChar(5, blackdinoflip);
-    screen.createChar(6, dinobird);
   }
   else {
     screen.createChar(0, dinodino); //créé les dessins de nos objets dans la mémoire associée au lcd
@@ -440,7 +234,6 @@ void LCD::dynamic_memory(){
     screen.createChar(3, dinodinolyingdown);
     screen.createChar(4, powerup);
     screen.createChar(5, dinoflip);
-    screen.createChar(6, dinobird);
   }
 }
 

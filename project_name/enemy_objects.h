@@ -35,9 +35,9 @@ class Enemy_objects : public Game_Object{
      *@fn void spawn(int x, int y);
      *@brief fait spawn l'objet à la position (x,y) du lcd
      *@param x la ligne sur laquelle l'objet spawn
-     *@param y la colonne sur laquelle l'objet spawn
+     *@param y la colonne sur laquelle l'objet spawn, par défaut à 15
     */
-    void spawn(int x, int y);
+    void spawn(int x, int y = 15);
 
     /**
      *@fn void reset(int x, int y)

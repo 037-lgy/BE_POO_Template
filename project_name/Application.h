@@ -14,7 +14,9 @@
 #include "Button.h"
 #include "Potentiometre.h"
 #include "Dino.h"
-#include "Enemy_objects.h"
+#include "Cactus.h"
+#include "Bird.h"
+#include "Powerup.h"
 
 using namespace std;
 
@@ -43,13 +45,13 @@ class Application
     state previousstate; //Pour éviter de réafficher en boucle le même texte
 
     Dino* my_dino;
-    Enemy_objects* cactus1;
-    Enemy_objects* cactus2;
-    Enemy_objects* cactus3;
-    Enemy_objects* bird1;
-    Enemy_objects* bird2;
-    Enemy_objects* bird3;
-    Enemy_objects* my_powerup;
+    Cactus* cactus1;
+    Cactus* cactus2;
+    Cactus* cactus3;
+    Bird* bird1;
+    Bird* bird2;
+    Bird* bird3;
+    Power_up* my_powerup;
     list<Game_Object *> my_objects;
 
     unsigned long lastspawn;
