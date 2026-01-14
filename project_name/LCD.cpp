@@ -6,7 +6,6 @@
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
   darkmode = false;
-  dinounderbird = false;
 }
 
 LCD::~LCD(){
@@ -73,13 +72,7 @@ void LCD::start(){
 }
 
 void LCD::update(){
-  if (currentmode == MENU || currentmode == OVER){
-    // screen.setCursor(0,0);
-    // screen.print(ligne0);
-    // screen.setCursor(0,1);
-    // screen.print(ligne1);
-  }
-  else { 
+  if (!(currentmode == MENU || currentmode == OVER)){ 
     screen.setRGB(r,g,b);
     for (int i = 0; i < 2; i++){
       for (int j = 0; j < 16; j++){
@@ -94,16 +87,11 @@ void LCD::update(){
             else if (object == cactus) {
               screen.write((uint8_t)1);
             }
-            else if (object == bird && !dinounderbird) {
+            else if (object == bird) {
               screen.write((uint8_t)2);
             }
-            else if (object == dinodinolyingdown && !dinounderbird) {
+            else if (object == dinodinolyingdown) {
               screen.write((uint8_t)3);
-            }
-            else if (object == dinodinolyingdown && dinounderbird) {
-              screen.write((uint8_t)6);
-              dinounderbird = false;
-              Serial.print("dino dessous oiseau");
             }
             else if (object == powerup){
               screen.write((uint8_t)4);
@@ -137,10 +125,7 @@ bool LCD::collision(Game_Object* obj1, Game_Object* obj2){
   for (int i = 0; i < 8; i++) {
     samebit |= obj1->getshape()[i] & obj2->getshape()[i];
   }
-  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino || dinoflip) {
-    dinounderbird = samecase && !(samebit);
-    return (samecase && samebit);
-  }
+  if (obj1->getshape() == dinodinolyingdown || obj1->getshape() == dinodino || dinoflip) return (samecase && samebit);
   return false;
 }
 
@@ -238,7 +223,3 @@ void LCD::dynamic_memory(){
 }
 
 bool LCD::getdarkmode() {return darkmode;}
-
-void LCD::toggledinounderbird(){
-  dinounderbird = !(dinounderbird);
-}

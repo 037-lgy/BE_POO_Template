@@ -22,7 +22,6 @@ class LCD : public Actuators{
     String ligne1;
     mode currentmode;
     bool darkmode;
-    bool dinounderbird;
   public:
     LCD(String name, uint8_t pin, int x, int y, int z);
     ~LCD();
@@ -43,7 +42,6 @@ class LCD : public Actuators{
     void setdarkmode();
     void setlightmode();
     void dynamic_memory();
-    void toggledinounderbird();
     bool getdarkmode();
     int getr(); //Récupérer le niveau de rouge
     int getg(); //Récupérer le niveau de vert
