@@ -23,5 +23,5 @@ uint8_t blackbird[8] = {
 };
 
 Bird::Bird():Enemy_objects(bird, 0, -1){
-
+  identity = danger;
 }

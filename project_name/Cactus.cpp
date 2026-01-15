@@ -23,5 +23,5 @@ uint8_t blackcactus[8] = {
 };
 
 Cactus::Cactus():Enemy_objects(cactus, 1, -1){
-
+  identity = danger;
 }

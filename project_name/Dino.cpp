@@ -68,7 +68,9 @@ uint8_t blackdinodinolyingdown[8] = {
   0b01000  // # ###
 };
 
-Dino::Dino(uint8_t* tab, int x, int y):Game_Object(tab, x, y),isjumping(false),jumptime((unsigned long)0),landtime((unsigned long)0),islanding(false){}
+Dino::Dino(uint8_t* tab, int x, int y):Game_Object(tab, x, y),isjumping(false),jumptime((unsigned long)0),landtime((unsigned long)0),islanding(false){
+  identity = dinosaur;
+}
 
 Dino::~Dino(){
 

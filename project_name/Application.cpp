@@ -52,9 +52,9 @@ Application::Application()
   my_objects.push_back(bird1);
   my_objects.push_back(cactus2);
   my_objects.push_back(bird2);
-  my_objects.push_back(my_powerup);
   my_objects.push_back(bird3);
   my_objects.push_back(cactus3);
+  my_objects.push_back(my_powerup);
 
   spawndelay = 4000;
   spawndelayMODE2 = 800;
@@ -211,6 +211,16 @@ void Application::updatescore(){
   lastime = millis();
 }
 
+bool Application::detectercollision(){
+  bool detection;
+  for (Game_Object* objects : my_objects) {
+        if (objects->getID()==danger){
+          detection |= my_screen->collision(my_dino, objects);
+      }
+  }
+      return detection;
+}
+
 void Application::run(void) {
   float poten;
   if (currentstate == EN_ATTENTE){
@@ -255,12 +265,12 @@ void Application::run(void) {
       my_dino->reset(1, 4);
       my_dino->changeshape(dinodino);
     }
-    else if (my_screen->collision(my_dino, cactus1) || 
+    else if (/*my_screen->collision(my_dino, cactus1) || 
     my_screen->collision(my_dino, bird1) || 
     my_screen->collision(my_dino, cactus2) || 
     my_screen->collision(my_dino, bird2) ||
     my_screen->collision(my_dino, bird3) ||
-    my_screen->collision(my_dino, cactus3)){
+    my_screen->collision(my_dino, cactus3)*/detectercollision()){
       currentstate = GAME_OVER;
       spawndelay = 4000;
       intensite = 200;
@@ -276,12 +286,13 @@ void Application::run(void) {
       else if (millis() - darkrefreshing > 40000) my_screen->setlightmode();
       //if (millis() - darkrefreshing > 40000) my_screen->setdarkmode();
 
-      // Changements à tester ici 
+      //Gestion de la couleur du potentiomètre
       poten = potentiometre->readsensor()*0.730476-5.11;
       if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
       else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
       else my_screen->setcouleur(255, 255, (int) poten-512);
 
+      //affichage du score et actualisation de la difficulté
       if (millis() - scorerefreshing > 500){ 
         my_screen->continuousscore(score);
         scorerefreshing = millis();
@@ -341,7 +352,6 @@ void Application::run(void) {
       else my_screen->setcouleur(255, 255, (int) poten-512);
       if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (millis() - tempsdecompte > 1000){
-        Serial.print(decompte);
         my_screen->affichedecompte(decompte);
         decompte--;
         tempsdecompte = millis();

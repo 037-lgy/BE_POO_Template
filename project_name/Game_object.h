@@ -7,12 +7,15 @@
 
 extern uint8_t dark[8];
 
+enum bot{dinosaur, danger, bonus, unknown};
+
 class Game_Object{
   protected:
     uint8_t* full_shape; // Forme d' l'objet (8 objets maximum)
     int x; //Ligne sur le lcd
     int y; //Colonne sur le lcd
     uint8_t* currentshape;
+    bot identity;
   public:
     /**
      *@fn Game_Object(uint8_t* tab, int x, int y)
@@ -81,6 +84,8 @@ class Game_Object{
      *@details doit être définie par les classes filles
     */
     virtual void reset(int x, int y)= 0;
+
+    bot getID();
 };
 
 #endif

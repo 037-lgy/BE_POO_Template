@@ -37,3 +37,7 @@ uint8_t* Game_Object::getshape(){
 void Game_Object::changeshape(uint8_t *tab){
   this->currentshape = tab;
 }
+
+bot Game_Object::getID(){
+  return identity;
+}
