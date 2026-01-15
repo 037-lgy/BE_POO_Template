@@ -69,15 +69,15 @@ Application::Application()
 Application::~Application() 
 {
   for (Actuators* actuator : my_actuators) {
-    delete [] actuator;
+    delete actuator;
   }
 
   for (Sensors* sensor : my_sensors) {
-    delete [] sensor;
+    delete sensor;
   }
 
   for (Game_Object* objects : my_objects) {
-    delete [] objects;
+    delete objects;
   }
 }
 
