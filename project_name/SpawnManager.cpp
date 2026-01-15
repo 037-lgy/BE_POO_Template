@@ -14,7 +14,7 @@ void SpawnManager::resetspawn(){
 }
 
 void SpawnManager::harder(){
-  if ((millis() - harderdelay) > 500) {
+  if (((millis() - harderdelay) > 500) && spawndelaymode1 > 1000) {
     spawndelaymode1 -= 100;
     harderdelay = millis();
   }
@@ -26,4 +26,8 @@ const int SpawnManager::getspawndelaymode1(){
 
 const int SpawnManager::getspawndelaymode2(){
   return spawndelaymode2;
+}
+
+void SpawnManager::setharderdelay(){
+  harderdelay = millis();
 }

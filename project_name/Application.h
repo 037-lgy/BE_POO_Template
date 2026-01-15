@@ -18,6 +18,7 @@
 #include "Bird.h"
 #include "Powerup.h"
 #include "score.h"
+#include "SpawnManager.h"
 
 using namespace std;
 
@@ -56,16 +57,16 @@ class Application
     list<Game_Object *> my_objects;
 
     Score* my_score;
+    SpawnManager SM;
 
     unsigned long lastspawn;
-    int spawndelay;
-    int spawndelayMODE2;
     int decompte;
     unsigned long starttime;
     unsigned long lastime;
     unsigned long darkrefreshing;
     unsigned long tempsdecompte;
     int intensite;
+
   public :
     /**
      * @fn Application();
@@ -92,5 +93,6 @@ class Application
 
     bool detectercollision();
     void updatescore();
+    void ColorManager();
 };
 #endif

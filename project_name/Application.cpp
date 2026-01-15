@@ -58,8 +58,8 @@ Application::Application()
 
   my_score = new Score();
 
-  spawndelay = 4000;
-  spawndelayMODE2 = 800;
+  SpawnManager SM();
+
   lastime = 0;
   intensite = 200;
   darkrefreshing = 0;
@@ -100,64 +100,53 @@ void Application::init(void)
 }
 
 void Application::randomspawn_mode1(){
-  if ((millis() - lastspawn) >= spawndelay){
-    int choice = random(6);
+  if ((millis() - lastspawn) >= SM.getspawndelaymode1()){
+    int choice = random(5);
     if (choice == 0){
       if (cactus1->gety() == -1){
-        cactus1->spawn(1,15);
+        cactus1->spawn(1,16);
       }
       else if (cactus2->gety() == -1) {
-        cactus2->spawn(1,15);
+        cactus2->spawn(1,16);
       }
       else if (cactus3->gety() == -1) {
-        cactus3->spawn(1,15);
+        cactus3->spawn(1,16);
       }
     }
     else if (choice == 1){
       if (bird1->gety() == -1){
-        bird1->spawn(0,15);
+        bird1->spawn(random(2),16);
       }
       else if (bird2->gety() == -1) {
-        bird2->spawn(0,15);
+        bird2->spawn(random(2),16);
       }
       else if (bird3->gety() == -1) {
-        bird3->spawn(0,15);
+        bird3->spawn(random(2),16);
       }
     }
-    else if (choice == 2){
-      if (bird1->gety() == -1){
-        bird1->spawn(1,15);
-      }
-      else if (bird2->gety() == -1) {
-        bird2->spawn(1,15);
-      }
-      else if (bird3->gety() == -1) {
-        bird3->spawn(1,15);
-      }
-    }
-    else if (choice == 3) {
+    else if (choice == 2) {
       if (my_powerup->gety() == -1){
-        my_powerup->spawn(0,15);
+        my_powerup->spawn(0,16);
+      }
+    }
+    else if (choice == 3){
+      if (cactus1->gety() == -1 && cactus2->gety() == -1){
+        cactus1->spawn(1,16);
+        cactus2->spawn(1,15);
+      }
+      if (cactus2->gety() == -1 && cactus3->gety() == -1){
+        cactus2->spawn(1,16);
+        cactus3->spawn(1,15);
       }
     }
     else if (choice == 4){
-      if (cactus1->gety() == -1 && cactus2->gety() == -1){
-        cactus1->spawn(1,15);
-        cactus2->spawn(1,14);
-      }
-      if (cactus2->gety() == -1 && cactus3->gety() == -1){
-        cactus2->spawn(1,15);
-        cactus3->spawn(1,14);
-      }
-    }
-    else if (choice == 5){
       if (bird1->gety() == -1 && bird2->gety() == -1){
-        bird1->spawn(1,15);
-        bird2->spawn(1,14);
+        bird1->spawn(1,16);
+        bird2->spawn(0,15);
       }
       if (bird2->gety() == -1 && bird3->gety() == -1){
-        bird2->spawn(1,15);
-        bird3->spawn(1,14);
+        bird2->spawn(1,16);
+        bird3->spawn(0,15);
       }
     }
     lastspawn = millis();
@@ -165,28 +154,28 @@ void Application::randomspawn_mode1(){
 }
 
 void Application::randomspawn_mode2(){
-  if ((millis() - lastspawn) >= spawndelayMODE2){
+  if ((millis() - lastspawn) >= SM.getspawndelaymode2()){
     int choice = random(2);
     if (choice == 0){
       if (cactus1->gety() == -1){
-        cactus1->spawn(1,15);
+        cactus1->spawn(1,16);
       }
       else if (cactus2->gety() == -1) {
-        cactus2->spawn(1,15);
+        cactus2->spawn(1,16);
       }
       else if (cactus3->gety() == -1) {
-        cactus3->spawn(1,15);
+        cactus3->spawn(1,16);
       }
     }
     else if (choice == 1){
       if (bird1->gety() == -1){
-        bird1->spawn(0,15);
+        bird1->spawn(0,16);
       }
       else if (bird2->gety() == -1) {
-        bird2->spawn(0,15);
+        bird2->spawn(0,16);
       }
       else if (bird3->gety() == -1) {
-        bird3->spawn(0,15);
+        bird3->spawn(0,16);
       }
     }
     lastspawn = millis();
@@ -203,6 +192,14 @@ bool Application::detectercollision(){
       return detection;
 }
 
+void Application::ColorManager(){
+  float poten;
+  poten = potentiometre->readsensor()*0.730476-5.11;
+  if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
+  else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
+  else my_screen->setcouleur(255, 255, (int) poten-512);
+}
+
 void Application::run(void) {
   float poten;
   if (currentstate == EN_ATTENTE){
@@ -216,6 +213,8 @@ void Application::run(void) {
       led2->set_off();
       led1->set_on();
 
+      my_screen->setlightmode();
+
       for (Game_Object* objects : my_objects) {
         objects->reset();
       }
@@ -228,21 +227,22 @@ void Application::run(void) {
   }
   else if (currentstate == EN_JEU) {
     if (previousstate != EN_JEU){
-      previousstate = EN_JEU;
       starttime = millis();
       my_score->actualiserlastime();
       lastspawn = millis();
-      darkrefreshing = millis();
+      if (previousstate == EN_ATTENTE) darkrefreshing = millis();
       my_screen->setcouleur(120, 120, 120);
       led1->set_off();
 
       my_dino->reset();
 
       my_dino->changeshape(dinodino);
+
+      previousstate = EN_JEU;
     }
     else if (detectercollision()){
       currentstate = GAME_OVER;
-      spawndelay = 4000;
+      SM.resetspawn();
       intensite = 200;
     }
     else if (my_screen->collision(my_dino, my_powerup)) {
@@ -252,17 +252,18 @@ void Application::run(void) {
       randomspawn_mode1();
       my_score->updatescoreMode1();
 
-      if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
-      else if (millis() - darkrefreshing > 40000) my_screen->setlightmode();
+      if ((millis() - darkrefreshing) > 15000) {
+        darkrefreshing = millis();
+        if (my_screen->getdarkmode()) my_screen->setlightmode();
+        else my_screen->setdarkmode();
+      }
 
       //Gestion de la couleur du potentiomètre
-      poten = potentiometre->readsensor()*0.730476-5.11;
-      if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
-      else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
-      else my_screen->setcouleur(255, 255, (int) poten-512);
+      ColorManager();
 
       //affichage du score et actualisation de la difficulté 
       my_screen->continuousscore(my_score->getscore());
+      SM.harder(); // Rajouterl= la condition avec l'intensité
         //if (intensite > 150) intensite--;
         //else if (spawndelay > 1000) spawndelay = spawndelay - 100;
         
@@ -298,7 +299,7 @@ void Application::run(void) {
     }
     else if (detectercollision()){
       currentstate = GAME_OVER;
-      spawndelay = 4000;
+      SM.resetspawn();
       intensite = 200;
     }
     else {
@@ -307,13 +308,14 @@ void Application::run(void) {
       
       my_score->updatescoreMode2();
 
-      if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
-      else if (millis() - darkrefreshing > 4000) my_screen->setlightmode();
+      if ((millis() - darkrefreshing) > 15000) {
+        darkrefreshing = millis();
+        if (my_screen->getdarkmode()) my_screen->setlightmode();
+        else my_screen->setdarkmode();
+      }
 
-      poten = potentiometre->readsensor()*0.730476-5.11;
-      if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
-      else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
-      else my_screen->setcouleur(255, 255, (int) poten-512);
+      ColorManager();
+
       if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (millis() - tempsdecompte > 1000){
         my_screen->affichedecompte(decompte);

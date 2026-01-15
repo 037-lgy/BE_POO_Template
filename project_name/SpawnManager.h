@@ -13,6 +13,7 @@ class SpawnManager{
         void harder();
         const int getspawndelaymode1();
         const int getspawndelaymode2();
+        void setharderdelay();
 };
 
 #endif
