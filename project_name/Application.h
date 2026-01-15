@@ -88,10 +88,9 @@ class Application
     */
     void run(void);
     void randomspawn_mode1();
-    bool detectercollision();
-
     void randomspawn_mode2();
 
+    bool detectercollision();
     void updatescore();
 };
 #endif
