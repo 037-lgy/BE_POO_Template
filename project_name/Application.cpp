@@ -316,6 +316,11 @@ void Application::run(void) {
         decompte--;
         tempsdecompte = millis();
       } 
+      if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr) && (my_screen->getmatrice()[1][5] == nullptr)){
+        currentstate = EN_JEU;
+        my_screen->affichedecompte(0);
+      }
+      
       my_screen->continuousscore(my_score.getscore());
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
@@ -331,10 +336,6 @@ void Application::run(void) {
       for (Game_Object* objects : my_objects) {
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
         objects->update_pos_basic(my_diffmanager.getintensite());
-      }
-      if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr) && (my_screen->getmatrice()[1][5] == nullptr)){
-        currentstate = EN_JEU;
-        my_screen->affichedecompte(0);
       }
     }
   }
