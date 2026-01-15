@@ -167,7 +167,7 @@ void Application::randomspawn_mode1(){
 
 void Application::randomspawn_mode2(){
   if ((millis() - lastspawn) >= spawndelayMODE2){
-    int choice = random(3);
+    int choice = random(2);
     if (choice == 0){
       if (cactus1->gety() == -1){
         cactus1->spawn(1,15);
@@ -188,17 +188,6 @@ void Application::randomspawn_mode2(){
       }
       else if (bird3->gety() == -1) {
         bird3->spawn(0,15);
-      }
-    }
-    else if (choice == 2){
-      if (bird1->gety() == -1){
-        bird1->spawn(1,15);
-      }
-      else if (bird2->gety() == -1) {
-        bird2->spawn(1,15);
-      }
-      else if (bird3->gety() == -1) {
-        bird3->spawn(1,15);
       }
     }
     lastspawn = millis();
@@ -233,17 +222,6 @@ void Application::run(void) {
       my_dino->changeshape(dinodino);
       led2->set_off();
       led1->set_on();
-
-      ////////////////////////////////////////////////////////////////////////////
-      //my_dino->reset(1, 4);
-      //cactus1->reset(1, -1);
-      //bird1->reset(0, -1);
-      //cactus2->reset(1, -1);
-      //bird2->reset(1, -1);
-      //cactus3->reset(1, -1);
-      //bird3->reset(1, -1);
-      //my_powerup->reset(0, -1);
-
 
       for (Game_Object* objects : my_objects) {
         objects->reset();
@@ -283,9 +261,8 @@ void Application::run(void) {
       randomspawn_mode1();
       updatescore();
 
-      if (millis() - darkrefreshing > 30000 && (millis() - darkrefreshing < 30100)) my_screen->setdarkmode();
+      if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
       else if (millis() - darkrefreshing > 40000) my_screen->setlightmode();
-      //if (millis() - darkrefreshing > 40000) my_screen->setdarkmode();
 
       //Gestion de la couleur du potentiomètre
       poten = potentiometre->readsensor()*0.730476-5.11;
@@ -341,7 +318,7 @@ void Application::run(void) {
       
       updatescore();
 
-      if (millis() - darkrefreshing > 30000 && (millis() - darkrefreshing < 30100)) my_screen->setdarkmode();
+      if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
       else if (millis() - darkrefreshing > 4000) my_screen->setlightmode();
 
       poten = potentiometre->readsensor()*0.730476-5.11;
@@ -382,6 +359,7 @@ void Application::run(void) {
   else if (currentstate == GAME_OVER) {
     if (previousstate != GAME_OVER){
       led2->set_on();
+      buzzer->set_off();
       score = score/300;
       if (highestscore < score) highestscore = score;
       my_screen->ending_screen();

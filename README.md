@@ -28,9 +28,7 @@ Dans l'état en jeu : mécaniques de jeu
 Il faudrait peut-être changer la matrice de l'écran pour prendre un type énuméré composé d'un objet et d'un char, si l'objet est nul, alors on affiche le char à la place.
 
 A améliorer :
-- centraliser collision
 - faire des fonctions pour regrouper
 - faire des commentaires
-- case qui combine dino et oiseau => defeat
 
 - Ne pas oublier de faire le destructeur !!!!
