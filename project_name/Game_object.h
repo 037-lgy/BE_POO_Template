@@ -77,13 +77,11 @@ class Game_Object{
     virtual void update_pos_basic(int intensity = -1)= 0;
 
     /**
-     *@fn virtual void reset(int x, int y)= 0
+     *@fn virtual void reset()= 0
      *@brief reset la position de l'objet dans le lcd
-     *@param x Ligne du lcd sur laquelle l'objet est positionné
-     *@param y Colonne du lcd sur laquelle l'objet est positionné
      *@details doit être définie par les classes filles
     */
-    virtual void reset(int x, int y)= 0;
+    virtual void reset()= 0;
 
     bot getID();
 };

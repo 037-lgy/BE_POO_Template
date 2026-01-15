@@ -25,3 +25,10 @@ uint8_t blackcactus[8] = {
 Cactus::Cactus():Enemy_objects(cactus, 1, -1){
   identity = danger;
 }
+
+void Cactus::reset(){
+  this->x = 1;
+  this->y = -1;
+  isgoingleft = false;
+  gotime = 0;
+}

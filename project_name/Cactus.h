@@ -8,7 +8,14 @@ extern uint8_t blackcactus[8];
 
 class Cactus : public Enemy_objects{
   public:
-    Cactus();  
+    Cactus();
+
+    /**
+     *@fn void reset()
+     *@brief reset la position de l'objet dans le lcd
+     *@details doit être définie par les classes filles
+    */
+    void reset();
 };
 
 #endif

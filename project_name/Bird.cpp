@@ -25,3 +25,10 @@ uint8_t blackbird[8] = {
 Bird::Bird():Enemy_objects(bird, 0, -1){
   identity = danger;
 }
+
+void Bird::reset(){
+  this->x = 0;
+  this->y = -1;
+  isgoingleft = false;
+  gotime = 0;
+}

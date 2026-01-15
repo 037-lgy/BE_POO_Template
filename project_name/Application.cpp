@@ -234,16 +234,20 @@ void Application::run(void) {
       led2->set_off();
       led1->set_on();
 
-      my_dino->reset(1, 4);
+      ////////////////////////////////////////////////////////////////////////////
+      //my_dino->reset(1, 4);
+      //cactus1->reset(1, -1);
+      //bird1->reset(0, -1);
+      //cactus2->reset(1, -1);
+      //bird2->reset(1, -1);
+      //cactus3->reset(1, -1);
+      //bird3->reset(1, -1);
+      //my_powerup->reset(0, -1);
 
-      cactus1->reset(1, -1);
-      bird1->reset(0, -1);
-      cactus2->reset(1, -1);
-      bird2->reset(1, -1);
-      cactus3->reset(1, -1);
-      bird3->reset(1, -1);
-      my_powerup->reset(0, -1);
 
+      for (Game_Object* objects : my_objects) {
+        objects->reset();
+      }
       my_screen->resetmatrice();
 
       score = 0;
@@ -262,15 +266,12 @@ void Application::run(void) {
       my_screen->setlightmode();
       my_screen->setcouleur(120, 120, 120);
       led1->set_off();
-      my_dino->reset(1, 4);
+
+      my_dino->reset();
+
       my_dino->changeshape(dinodino);
     }
-    else if (/*my_screen->collision(my_dino, cactus1) || 
-    my_screen->collision(my_dino, bird1) || 
-    my_screen->collision(my_dino, cactus2) || 
-    my_screen->collision(my_dino, bird2) ||
-    my_screen->collision(my_dino, bird3) ||
-    my_screen->collision(my_dino, cactus3)*/detectercollision()){
+    else if (detectercollision()){
       currentstate = GAME_OVER;
       spawndelay = 4000;
       intensite = 200;
@@ -322,17 +323,14 @@ void Application::run(void) {
       starttime = millis();
       previousstate = NEW_MODE;
       my_dino->changeshape(dinoflip);
-      my_dino->reset(0, 4);
+    
+      my_dino->setpos(0, 4);
+
       decompte = 9;
       tempsdecompte = millis();
       buzzer->set_off();
     }
-    else if ((millis() - starttime) > 500 && (my_screen->collision(my_dino, cactus1) || 
-    my_screen->collision(my_dino, bird1) || 
-    my_screen->collision(my_dino, cactus2) || 
-    my_screen->collision(my_dino, bird2) ||
-    my_screen->collision(my_dino, bird3) ||
-    my_screen->collision(my_dino, cactus3))){
+    else if (detectercollision()){
       currentstate = GAME_OVER;
       spawndelay = 4000;
       intensite = 200;

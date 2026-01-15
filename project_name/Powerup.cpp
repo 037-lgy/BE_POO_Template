@@ -25,3 +25,10 @@ uint8_t blackpowerup[8] = {
 Power_up::Power_up():Enemy_objects(powerup, 0, -1){
   identity = bonus;
 }
+
+void Power_up::reset(){
+  this->x = 0;
+  this->y = -1;
+  isgoingleft = false;
+  gotime = 0;
+}

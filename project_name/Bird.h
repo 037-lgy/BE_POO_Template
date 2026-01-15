@@ -8,7 +8,14 @@ extern uint8_t blackbird[8];
 
 class Bird : public Enemy_objects{
   public:
-    Bird();  
+    Bird();
+
+    /**
+     *@fn void reset()
+     *@brief reset la position de l'objet dans le lcd
+     *@details doit être définie par les classes filles
+    */
+    void reset();  
 };
 
 #endif

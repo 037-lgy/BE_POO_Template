@@ -53,12 +53,18 @@ class Dino : public Game_Object{
     bool getisjumping();
 
     /**
-     *@fn void reset(int x, int y)
+     *@fn void reset()
      *@brief reset la position du dino dans le lcd
-     *@param x Ligne du lcd sur laquelle le dino est reset
-     *@param y Colonne du lcd sur laquelle le dino est reset
     */
-    void reset(int x, int y);
+    void reset();
+
+    /**
+     *@fn void setpos(int x, int y)
+     *@brief Modifie la position de notre objet sur le lcd
+     *@param x Ligne du lcd sur laquelle l'objet est positionné
+     *@param y Colonne du lcd sur laquelle l'objet est positionné
+    */
+    void setpos(int x, int y);
 };
 
 #endif

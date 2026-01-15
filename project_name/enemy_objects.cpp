@@ -28,10 +28,3 @@ void Enemy_objects::spawn(int x, int y){
   this->y = y;
   isgoingleft = false;
 }
-
-void Enemy_objects::reset(int x, int y){
-  this->x = x;
-  this->y = y;
-  isgoingleft = false;
-  gotime = 0;
-}

@@ -68,9 +68,7 @@ uint8_t blackdinodinolyingdown[8] = {
   0b01000  // # ###
 };
 
-Dino::Dino(uint8_t* tab, int x, int y):Game_Object(tab, x, y),isjumping(false),jumptime((unsigned long)0),landtime((unsigned long)0),islanding(false){
-  identity = dinosaur;
-}
+Dino::Dino(uint8_t* tab, int x, int y):Game_Object(tab, x, y),isjumping(false),jumptime((unsigned long)0),landtime((unsigned long)0),islanding(false){}
 
 Dino::~Dino(){
 
@@ -106,9 +104,18 @@ bool Dino::getisjumping(){
   return isjumping;
 }
 
-void Dino::reset(int x, int y){
+void Dino::setpos(int x, int y){
   this->x = x;
   this->y = y;
+  islanding = false;
+  isjumping = false;
+  landtime = 0;
+  jumptime = 0;
+}
+
+void Dino::reset(){
+  this->x = 1;
+  this->y = 4;
   islanding = false;
   isjumping = false;
   landtime = 0;
