@@ -6,6 +6,7 @@
 LCD::LCD(String name, uint8_t pin, int x, int y, int z):Actuators(name, pin),r(x), g(y), b(z){
   currentmode = MENU;
   darkmode = false;
+  scorerefreshing = 0;
 }
 
 LCD::~LCD(){
@@ -154,24 +155,27 @@ void LCD::affichedecompte(int decompte){
 }
 
 void LCD::continuousscore(int s){
-  String Str = String(s/300);
-  if (Str.length() <= 1){
-    screen.setCursor(2, 0);
-    screen.write(Str[0]);
-  }
-  else if (Str.length() <= 2) {
-    screen.setCursor(2, 0);
-    screen.write(Str[1]);
-    screen.setCursor(1, 0);
-    screen.write(Str[0]);
-  }
-  else if (Str.length() <= 3) {
-    screen.setCursor(2, 0);
-    screen.write(Str[2]);
-    screen.setCursor(1, 0);
-    screen.write(Str[1]);
-    screen.setCursor(0, 0);
-    screen.write(Str[0]);
+  if (millis() - scorerefreshing > 500){
+    String Str = String(s/300);
+    if (Str.length() <= 1){
+      screen.setCursor(2, 0);
+      screen.write(Str[0]);
+    }
+    else if (Str.length() <= 2) {
+      screen.setCursor(2, 0);
+      screen.write(Str[1]);
+      screen.setCursor(1, 0);
+      screen.write(Str[0]);
+    }
+    else if (Str.length() <= 3) {
+      screen.setCursor(2, 0);
+      screen.write(Str[2]);
+      screen.setCursor(1, 0);
+      screen.write(Str[1]);
+      screen.setCursor(0, 0);
+      screen.write(Str[0]);
+    }
+    scorerefreshing = millis();
   }
 }
 

@@ -56,14 +56,13 @@ Application::Application()
   my_objects.push_back(cactus3);
   my_objects.push_back(my_powerup);
 
+  my_score = new Score();
+
   spawndelay = 4000;
   spawndelayMODE2 = 800;
   lastime = 0;
-  score = 0;
-  scorerefreshing = 0;
   intensite = 200;
   darkrefreshing = 0;
-  highestscore = 0;
 }
   
 Application::~Application() 
@@ -194,12 +193,6 @@ void Application::randomspawn_mode2(){
   }
 }
 
-void Application::updatescore(){
-  if (currentstate == EN_JEU) score = score + (millis() - lastime);
-  else if (currentstate == NEW_MODE) score = score + 3*(millis() - lastime);
-  lastime = millis();
-}
-
 bool Application::detectercollision(){
   bool detection;
   for (Game_Object* objects : my_objects) {
@@ -228,8 +221,7 @@ void Application::run(void) {
       }
       my_screen->resetmatrice();
 
-      score = 0;
-      lastime = millis();
+      my_score->resetscore();
       lastspawn = millis();
       previousstate = EN_ATTENTE;
     }
@@ -238,10 +230,9 @@ void Application::run(void) {
     if (previousstate != EN_JEU){
       previousstate = EN_JEU;
       starttime = millis();
-      lastime = millis();
+      my_score->actualiserlastime();
       lastspawn = millis();
       darkrefreshing = millis();
-      my_screen->setlightmode();
       my_screen->setcouleur(120, 120, 120);
       led1->set_off();
 
@@ -259,7 +250,7 @@ void Application::run(void) {
     }
     else {
       randomspawn_mode1();
-      updatescore();
+      my_score->updatescoreMode1();
 
       if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
       else if (millis() - darkrefreshing > 40000) my_screen->setlightmode();
@@ -270,13 +261,11 @@ void Application::run(void) {
       else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
       else my_screen->setcouleur(255, 255, (int) poten-512);
 
-      //affichage du score et actualisation de la difficulté
-      if (millis() - scorerefreshing > 500){ 
-        my_screen->continuousscore(score);
-        scorerefreshing = millis();
-        if (intensite > 150) intensite--;
-        else if (spawndelay > 1000) spawndelay = spawndelay - 100;
-      }
+      //affichage du score et actualisation de la difficulté 
+      my_screen->continuousscore(my_score->getscore());
+        //if (intensite > 150) intensite--;
+        //else if (spawndelay > 1000) spawndelay = spawndelay - 100;
+        
       if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (button_orange->readsensor() == LOW && button_rouge->readsensor() == HIGH && (!my_dino->getisjumping())){
         my_dino->changeshape(dinodinolyingdown);
@@ -316,7 +305,7 @@ void Application::run(void) {
       if (millis() - starttime < 9000)randomspawn_mode2();
       else randomspawn_mode1();
       
-      updatescore();
+      my_score->updatescoreMode2();
 
       if (millis() - darkrefreshing > 15000 && (millis() - darkrefreshing < 15100)) my_screen->setdarkmode();
       else if (millis() - darkrefreshing > 4000) my_screen->setlightmode();
@@ -330,11 +319,8 @@ void Application::run(void) {
         my_screen->affichedecompte(decompte);
         decompte--;
         tempsdecompte = millis();
-      }
-      if (millis() - scorerefreshing > 500){ 
-        my_screen->continuousscore(score);
-        scorerefreshing = millis();
-      }
+      } 
+      my_screen->continuousscore(my_score->getscore());
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
         my_dino->setpos(0, my_dino->gety());
@@ -360,10 +346,9 @@ void Application::run(void) {
     if (previousstate != GAME_OVER){
       led2->set_on();
       buzzer->set_off();
-      score = score/300;
-      if (highestscore < score) highestscore = score;
       my_screen->ending_screen();
-      my_screen->desplayscore(score, highestscore);
+      my_score->updatescorefinal();
+      my_screen->desplayscore(my_score->getscore(), my_score->gethighscore());
       previousstate = GAME_OVER;
       starttime = millis();
     }

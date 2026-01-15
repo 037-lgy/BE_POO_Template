@@ -22,6 +22,7 @@ class LCD : public Actuators{
     String ligne1;
     mode currentmode;
     bool darkmode;
+    unsigned long scorerefreshing;
   public:
     /**
      *@fn LCD(String name, uint8_t pin, int x, int y, int z)

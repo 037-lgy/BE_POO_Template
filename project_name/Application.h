@@ -17,6 +17,7 @@
 #include "Cactus.h"
 #include "Bird.h"
 #include "Powerup.h"
+#include "score.h"
 
 using namespace std;
 
@@ -54,15 +55,14 @@ class Application
     Power_up* my_powerup;
     list<Game_Object *> my_objects;
 
+    Score* my_score;
+
     unsigned long lastspawn;
     int spawndelay;
     int spawndelayMODE2;
-    int score;
-    int highestscore;
     int decompte;
     unsigned long starttime;
     unsigned long lastime;
-    unsigned long scorerefreshing;
     unsigned long darkrefreshing;
     unsigned long tempsdecompte;
     int intensite;
