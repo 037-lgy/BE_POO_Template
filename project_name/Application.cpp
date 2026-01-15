@@ -56,12 +56,11 @@ Application::Application()
   my_objects.push_back(cactus3);
   my_objects.push_back(my_powerup);
 
-  my_score = new Score();
+  Score my_score();
 
-  SpawnManager SM();
+  DifficultyManager my_diffmanager();
 
   lastime = 0;
-  intensite = 200;
   darkrefreshing = 0;
 }
   
@@ -100,7 +99,7 @@ void Application::init(void)
 }
 
 void Application::randomspawn_mode1(){
-  if ((millis() - lastspawn) >= SM.getspawndelaymode1()){
+  if ((millis() - lastspawn) >= my_diffmanager.getspawndelaymode1()){
     int choice = random(5);
     if (choice == 0){
       if (cactus1->gety() == -1){
@@ -154,7 +153,7 @@ void Application::randomspawn_mode1(){
 }
 
 void Application::randomspawn_mode2(){
-  if ((millis() - lastspawn) >= SM.getspawndelaymode2()){
+  if ((millis() - lastspawn) >= my_diffmanager.getspawndelaymode2()){
     int choice = random(2);
     if (choice == 0){
       if (cactus1->gety() == -1){
@@ -220,7 +219,7 @@ void Application::run(void) {
       }
       my_screen->resetmatrice();
 
-      my_score->resetscore();
+      my_score.resetscore();
       lastspawn = millis();
       previousstate = EN_ATTENTE;
     }
@@ -228,7 +227,7 @@ void Application::run(void) {
   else if (currentstate == EN_JEU) {
     if (previousstate != EN_JEU){
       starttime = millis();
-      my_score->actualiserlastime();
+      my_score.actualiserlastime();
       lastspawn = millis();
       if (previousstate == EN_ATTENTE) darkrefreshing = millis();
       my_screen->setcouleur(120, 120, 120);
@@ -242,15 +241,14 @@ void Application::run(void) {
     }
     else if (detectercollision()){
       currentstate = GAME_OVER;
-      SM.resetspawn();
-      intensite = 200;
+      my_diffmanager.resetspawn();
     }
     else if (my_screen->collision(my_dino, my_powerup)) {
       currentstate = NEW_MODE;
     }
     else {
       randomspawn_mode1();
-      my_score->updatescoreMode1();
+      my_score.updatescoreMode1();
 
       if ((millis() - darkrefreshing) > 15000) {
         darkrefreshing = millis();
@@ -262,11 +260,8 @@ void Application::run(void) {
       ColorManager();
 
       //affichage du score et actualisation de la difficulté 
-      my_screen->continuousscore(my_score->getscore());
-      SM.harder(); // Rajouterl= la condition avec l'intensité
-        //if (intensite > 150) intensite--;
-        //else if (spawndelay > 1000) spawndelay = spawndelay - 100;
-        
+      my_screen->continuousscore(my_score.getscore());
+      my_diffmanager.harder();
       if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
       if (button_orange->readsensor() == LOW && button_rouge->readsensor() == HIGH && (!my_dino->getisjumping())){
         my_dino->changeshape(dinodinolyingdown);
@@ -280,7 +275,7 @@ void Application::run(void) {
       }
       my_screen->resetmatrice();
       for (Game_Object* objects : my_objects) {
-        objects->update_pos_basic(intensite);
+        objects->update_pos_basic(my_diffmanager.getintensite());
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
       }
     }
@@ -299,14 +294,13 @@ void Application::run(void) {
     }
     else if (detectercollision()){
       currentstate = GAME_OVER;
-      SM.resetspawn();
-      intensite = 200;
+      my_diffmanager.resetspawn();
     }
     else {
       if (millis() - starttime < 9000)randomspawn_mode2();
       else randomspawn_mode1();
       
-      my_score->updatescoreMode2();
+      my_score.updatescoreMode2();
 
       if ((millis() - darkrefreshing) > 15000) {
         darkrefreshing = millis();
@@ -322,7 +316,7 @@ void Application::run(void) {
         decompte--;
         tempsdecompte = millis();
       } 
-      my_screen->continuousscore(my_score->getscore());
+      my_screen->continuousscore(my_score.getscore());
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
         my_dino->setpos(0, my_dino->gety());
@@ -336,7 +330,7 @@ void Application::run(void) {
       my_screen->resetmatrice();
       for (Game_Object* objects : my_objects) {
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
-        objects->update_pos_basic(intensite);
+        objects->update_pos_basic(my_diffmanager.getintensite());
       }
       if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr) && (my_screen->getmatrice()[1][5] == nullptr)){
         currentstate = EN_JEU;
@@ -349,8 +343,8 @@ void Application::run(void) {
       led2->set_on();
       buzzer->set_off();
       my_screen->ending_screen();
-      my_score->updatescorefinal();
-      my_screen->desplayscore(my_score->getscore(), my_score->gethighscore());
+      my_score.updatescorefinal();
+      my_screen->desplayscore(my_score.getscore(), my_score.gethighscore());
       previousstate = GAME_OVER;
       starttime = millis();
     }

@@ -18,7 +18,7 @@
 #include "Bird.h"
 #include "Powerup.h"
 #include "score.h"
-#include "SpawnManager.h"
+#include "DifficultyManager.h"
 
 using namespace std;
 
@@ -56,8 +56,8 @@ class Application
     Power_up* my_powerup;
     list<Game_Object *> my_objects;
 
-    Score* my_score;
-    SpawnManager SM;
+    Score my_score;
+    DifficultyManager my_diffmanager;
 
     unsigned long lastspawn;
     int decompte;
@@ -66,6 +66,7 @@ class Application
     unsigned long darkrefreshing;
     unsigned long tempsdecompte;
     int intensite;
+    unsigned long freqintensite;
 
   public :
     /**

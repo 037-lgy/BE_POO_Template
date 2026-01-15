@@ -40,11 +40,12 @@ class Enemy_objects : public Game_Object{
     void spawn(int x, int y = 15);
 
     /**
-     *@fn virtual void reset()= 0
-     *@brief reset la position de l'objet dans le lcd
-     *@details doit être définie par les classes filles
+     *@fn void reset(int x, int y)
+     *@brief reset la position de l'objet ennemi dans le lcd
+     *@param x Ligne du lcd sur laquelle l'objet est reset
+     *@param y Colonne du lcd sur laquelle l'objet est reset
     */
-    virtual void reset()= 0;
+    void reset(int x, int y);
 };
 
 #endif
