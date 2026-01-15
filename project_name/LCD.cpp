@@ -141,14 +141,14 @@ void LCD::desplayscore(int s,int hs){
   screen.print(ligne1);
 }
 
-void LCD::affichedecompte(int i){
-  if (i>9 || i <= 0){
+void LCD::affichedecompte(int decompte){
+  if (decompte>9 || decompte <= 0){
     screen.setCursor(0, 1);
     screen.print(" ");
   }
   else{
     screen.setCursor(0, 1);
-    ligne1 = (String)i;
+    ligne1 = (String)decompte;
     screen.print(ligne1);
   }
 }
