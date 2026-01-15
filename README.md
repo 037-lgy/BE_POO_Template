@@ -32,3 +32,39 @@ A améliorer :
 - faire des commentaires
 
 - Ne pas oublier de faire le destructeur !!!!
+
+void Application::ColorManager(){
+    float poten;
+    poten = potentiometre->readsensor()*0.730476-5.11;
+    if ((int) poten < 256) my_screen->setcouleur(0,(int) poten, 0);
+    else if ((int) poten < 511) my_screen->setcouleur(255, (int) poten-256, 0);
+    else my_screen->setcouleur(255, 255, (int) poten-512);
+}
+
+void ColorManager();
+
+A supprimer : my_screen->setlightmode(); (244)
+
+class spawnManager(){
+    private:
+        int spawndelaymode1;
+        int spawndelaymode2;
+        unsigned long harderdelay;
+    public:
+        spawnManager(){
+            spawndelaymode1 = 4000;
+            spawndelaymode2 = 800;
+            harderdelay = millis();
+        }
+        void resetspawn(){
+            spawndelaymode1 = 4000;
+        }
+        void harder(){
+            if ((millis() - harderdelay) > 500) {
+                spawndelaymode1 -= 100;
+                harderdelay = millis();
+            }
+        }
+        const int getspawndelaymode1(){return spawndelaymode1};
+        const int getspawndelaymode2(){return spawndelaymode2};
+}
