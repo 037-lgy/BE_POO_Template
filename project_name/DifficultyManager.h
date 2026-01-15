@@ -17,7 +17,6 @@ class DifficultyManager{
         const int getspawndelaymode1();
         const int getspawndelaymode2();
         const int getintensite();
-        void setharderdelay();
 };
 
 #endif
