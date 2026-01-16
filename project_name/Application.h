@@ -22,78 +22,98 @@
 
 using namespace std;
 
-enum state{EN_ATTENTE, EN_JEU, NEW_MODE, GAME_OVER};
+enum state { EN_ATTENTE,
+             EN_JEU,
+             NEW_MODE,
+             GAME_OVER };
 
 /**
   * @class Application
   * @brief Classe Application   
-*/    
-class Application
-{
-  private :
-    LCD* my_screen;
-    LED* led1;
-    LED* led2;
-    LED* led3;
-    Buzzer* buzzer;
-    list<Actuators *> my_actuators;
+*/
+class Application {
+private:
+  LCD* my_screen;
+  LED* led1;
+  LED* led2;
+  LED* led3;
+  Buzzer* buzzer;
+  list<Actuators*> my_actuators;
 
-    Button* button_rouge;
-    Button* button_orange;
-    Potentiometre* potentiometre;
-    list<Sensors *> my_sensors;
+  Button* button_rouge;
+  Button* button_orange;
+  Potentiometre* potentiometre;
+  list<Sensors*> my_sensors;
 
-    state currentstate;
-    state previousstate; //Pour éviter de réafficher en boucle le même texte
+  state currentstate;
+  state previousstate;  //Pour éviter de réafficher en boucle le même texte
 
-    Dino* my_dino;
-    Cactus* cactus1;
-    Cactus* cactus2;
-    Cactus* cactus3;
-    Bird* bird1;
-    Bird* bird2;
-    Bird* bird3;
-    Power_up* my_powerup;
-    list<Game_Object *> my_objects;
+  Dino* my_dino;
+  Cactus* cactus1;
+  Cactus* cactus2;
+  Cactus* cactus3;
+  Bird* bird1;
+  Bird* bird2;
+  Bird* bird3;
+  Power_up* my_powerup;
+  list<Game_Object*> my_objects;
 
-    Score my_score;
-    DifficultyManager my_diffmanager;
+  Score my_score;
+  DifficultyManager my_diffmanager;
 
-    unsigned long lastspawn;
-    int decompte;
-    unsigned long starttime;
-    unsigned long lastime;
-    unsigned long darkrefreshing;
-    unsigned long tempsdecompte;
-    int intensite;
-    unsigned long freqintensite;
+  unsigned long lastspawn;
+  int decompte;
+  unsigned long starttime;
+  unsigned long lastime;
+  unsigned long darkrefreshing;
+  unsigned long tempsdecompte;
+  int intensite;
+  unsigned long freqintensite;
 
-  public :
-    /**
+public:
+  /**
      * @fn Application();
-     * @brief Constructeur par defaut
-    */    
-    Application();
-    /**
-     * @fn Application();
-     * @brief Destructeur
-    */    
-    ~Application();    
-    /**
+     * @brief Constructeur de notre application
+    */
+  Application();
+  /**
+     * @fn ~Application();
+     * @brief Destructeur de notre application
+    */
+  ~Application();
+  /**
      * @fn void init(void)
      * @brief Fonction d'initialisation de l'application
     */
-    void init(void);
-    /**
+  void init(void);
+  /**
      * @fn void run(void)
      * @brief Fonction de lancement de l'application
     */
-    void run(void);
-    void randomspawn_mode1();
-    void randomspawn_mode2();
+  void run(void);
 
-    bool detectercollision();
-    void updatescore();
-    void ColorManager();
+  /**
+     *@fn void randomspawn_mode1()
+     *@brief Gestion du spawn pour le mode de jeu normal
+    */
+  void randomspawn_mode1();
+
+  /**
+     *@fn void randomspawn_mode2()
+     *@brief Gestion du spawn pour le second mode de jeu
+    */
+  void randomspawn_mode2();
+
+  /**
+     *@fn bool detectercollision()
+     *@brief Automatisation de la gestion des collisions du dino avec tous les objets ennemis
+    */
+  bool detectercollision();
+
+  /**
+     *@fn void ColorManager()
+     *@brief Gestion de la couleur de l'écran de jeu avec le potentiomètre
+  */
+  void ColorManager();
 };
 #endif
