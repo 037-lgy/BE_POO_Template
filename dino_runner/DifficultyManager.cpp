@@ -25,14 +25,14 @@ void DifficultyManager::harder(){
   }
 }
 
-const int DifficultyManager::getspawndelaymode1(){
+int DifficultyManager::getspawndelaymode1(){
   return spawndelaymode1;
 }
 
-const int DifficultyManager::getspawndelaymode2(){
+int DifficultyManager::getspawndelaymode2(){
   return spawndelaymode2;
 }
 
-const int DifficultyManager::getintensite(){
+int DifficultyManager::getintensite(){
   return intensite;
 }

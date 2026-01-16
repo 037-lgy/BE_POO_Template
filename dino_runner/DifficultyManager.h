@@ -39,21 +39,21 @@ class DifficultyManager{
         *@brief retourne la frequence d'apparition des objets pour le mode 1
         *@return int
         */
-        const int getspawndelaymode1();
+        int getspawndelaymode1();
 
         /**
          *@fn getspawndelaymode2()
         *@brief retourne la frequence d'apparition des objets pour le mode 2
         *@return int
         */
-        const int getspawndelaymode2();
+        int getspawndelaymode2();
 
         /**
          *@fn getintensite()
         *@brief retourne la rapidité de déplacement des objets
         *@return int
         */
-        const int getintensite();
+        int getintensite();
 };
 
 #endif

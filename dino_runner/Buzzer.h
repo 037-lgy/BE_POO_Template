@@ -6,8 +6,6 @@
 #include "Single_pin_actuators.h"
 
 class Buzzer : public Single_pin_actuators{
-  private:
-    uint8_t state;
   public:
     /**
      *@fn Buzzer(String name, uint8_t pin)

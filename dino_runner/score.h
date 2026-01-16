@@ -6,7 +6,7 @@ class Score {
   int highestscore;
   int score;
   unsigned long scorerefreshing;
-  unsigned lastime;
+  unsigned long lastime;
   public:
 
   /**

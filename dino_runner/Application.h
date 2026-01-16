@@ -64,7 +64,6 @@ private:
   unsigned long lastspawn;
   int decompte;
   unsigned long starttime;
-  unsigned long lastime;
   unsigned long darkrefreshing;
   unsigned long tempsdecompte;
 

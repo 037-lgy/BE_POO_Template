@@ -60,7 +60,6 @@ Application::Application()
 
   DifficultyManager my_diffmanager();
 
-  lastime = 0;
   darkrefreshing = 0;
 }
   
