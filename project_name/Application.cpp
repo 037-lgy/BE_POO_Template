@@ -200,13 +200,15 @@ void Application::ColorManager(){
 }
 
 void Application::run(void) {
-  float poten;
   if (currentstate == EN_ATTENTE){
+
+    // Passage au jeu si on appuie sur le bouton rouge
     if (button_rouge->readsensor() == LOW){
       my_screen->start();
       currentstate = EN_JEU;
     }
     else if (previousstate != EN_ATTENTE){
+      // Entrée dans l'écran d'attente
       my_screen->waiting_screen();
       my_dino->changeshape(dinodino);
       led2->set_off();
@@ -226,6 +228,7 @@ void Application::run(void) {
   }
   else if (currentstate == EN_JEU) {
     if (previousstate != EN_JEU){
+      // Entrée dans le jeu
       starttime = millis();
       my_score.actualiserlastime();
       lastspawn = millis();
@@ -250,30 +253,36 @@ void Application::run(void) {
       randomspawn_mode1();
       my_score.updatescoreMode1();
 
+      // Gestion du changement du mode nuit/jour
       if ((millis() - darkrefreshing) > 15000) {
         darkrefreshing = millis();
         if (my_screen->getdarkmode()) my_screen->setlightmode();
         else my_screen->setdarkmode();
       }
 
-      //Gestion de la couleur du potentiomètre
-      ColorManager();
-
-      //affichage du score et actualisation de la difficulté 
+      ColorManager(); 
       my_screen->continuousscore(my_score.getscore());
       my_diffmanager.harder();
-      if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
+
+
+      if (buzzer->getstate() == HIGH) buzzer->set_off();
+
+      // Gestion de l'accroupissement du dinosaure en fonction de l'état des boutons
       if (button_orange->readsensor() == LOW && button_rouge->readsensor() == HIGH && (!my_dino->getisjumping())){
         my_dino->changeshape(dinodinolyingdown);
       }
       else {
         my_dino->changeshape(dinodino);
       }
+
+      // Gestion du saut du dinausore en fonction de l'état des boutons
       if (button_rouge->readsensor() == LOW && !(my_dino->getisjumping()) && button_orange->readsensor() == HIGH){
         buzzer->set_on();
         my_dino->jump();
       }
+
       my_screen->resetmatrice();
+
       for (Game_Object* objects : my_objects) {
         objects->update_pos_basic(my_diffmanager.getintensite());
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
@@ -282,6 +291,7 @@ void Application::run(void) {
   }
   else if (currentstate == NEW_MODE){
     if (previousstate != NEW_MODE){
+      // Entrée dans le new mode
       starttime = millis();
       previousstate = NEW_MODE;
       my_dino->changeshape(dinoflip);
@@ -297,11 +307,12 @@ void Application::run(void) {
       my_diffmanager.resetspawn();
     }
     else {
-      if (millis() - starttime < 9000)randomspawn_mode2();
+      if (millis() - starttime < 9000) randomspawn_mode2(); // Eviter les aléas de mélange de spawn entre les 2 modes
       else randomspawn_mode1();
       
       my_score.updatescoreMode2();
 
+      // Gestion du changement du mode nuit/jour
       if ((millis() - darkrefreshing) > 15000) {
         darkrefreshing = millis();
         if (my_screen->getdarkmode()) my_screen->setlightmode();
@@ -310,18 +321,24 @@ void Application::run(void) {
 
       ColorManager();
 
-      if (buzzer->getstate() == HIGH) buzzer->set_off(); //Ne pas oublier sinon c'est chiant
+      if (buzzer->getstate() == HIGH) buzzer->set_off();
+
+      // Gestion du timer en bas à gauche de l'écran
       if (millis() - tempsdecompte > 1000){
         my_screen->affichedecompte(decompte);
         decompte--;
         tempsdecompte = millis();
-      } 
+      }
+
+      // Gestion du retour dans le mode de jeu normal après 10 secondes, en la présence d'un autre objet d'abord
       if ((millis() - starttime) > 10000 && (my_screen->getmatrice()[1][4] == nullptr) && (my_screen->getmatrice()[1][5] == nullptr)){
         currentstate = EN_JEU;
         my_screen->affichedecompte(0);
       }
       
       my_screen->continuousscore(my_score.getscore());
+
+      // Gestion du changement de position du dinosaure en fonction de l'état des boutons
       if (button_rouge->readsensor() == LOW && my_dino->getshape() != dinoflip){
         my_dino->changeshape(dinoflip);
         my_dino->setpos(0, my_dino->gety());
@@ -332,6 +349,7 @@ void Application::run(void) {
         my_dino->setpos(1, my_dino->gety());
         buzzer->set_on();
       }
+
       my_screen->resetmatrice();
       for (Game_Object* objects : my_objects) {
         my_screen->setmatrice(objects, objects->getx(), objects->gety());
@@ -341,6 +359,7 @@ void Application::run(void) {
   }
   else if (currentstate == GAME_OVER) {
     if (previousstate != GAME_OVER){
+      // Entrée dans l'écran de game over
       led2->set_on();
       buzzer->set_off();
       my_screen->ending_screen();
@@ -349,11 +368,13 @@ void Application::run(void) {
       previousstate = GAME_OVER;
       starttime = millis();
     }
+
+    // Passage à l'écran d'attente si on appuie sur le bouton orange, empêcher l'aléa de relancer le jeu immédiatement si on appuyait sur le bouton orange lorsque l'on a perdu
     else if (button_orange->readsensor() == LOW && (millis() - starttime) > 1500){
       currentstate = EN_ATTENTE;
     }
-    // on peut allumer / faire clignoter des leds
   }
+
   for (Actuators* actuator : my_actuators) {
     actuator->update();
   }
