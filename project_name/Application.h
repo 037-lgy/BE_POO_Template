@@ -46,7 +46,7 @@ private:
   list<Sensors*> my_sensors;
 
   state currentstate;
-  state previousstate;  //Pour éviter de réafficher en boucle le même texte
+  state previousstate;
 
   Dino* my_dino;
   Cactus* cactus1;
@@ -67,8 +67,6 @@ private:
   unsigned long lastime;
   unsigned long darkrefreshing;
   unsigned long tempsdecompte;
-  int intensite;
-  unsigned long freqintensite;
 
 public:
   /**

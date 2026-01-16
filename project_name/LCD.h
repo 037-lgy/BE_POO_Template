@@ -82,7 +82,7 @@ class LCD : public Actuators{
 
     /**
     *@fn resetmatrice()
-    *@brief Efface la totalité des éléments du jeu présentsc dans la matrice de suivi de position des éléments
+    *@brief Efface la totalité des éléments du jeu présent dans la matrice qui suit la position des éléments
     */
     void resetmatrice();
 
@@ -128,7 +128,7 @@ class LCD : public Actuators{
 
     /**
     *@fn getmatrice()
-    *@brief permet de récuperer la matrice actuelle de suivi de position des éléments du jeu
+    *@brief permet de récuperer la matrice actuelle qui suit la position des éléments du jeu
     *@return std::array<std::array<Game_Object*, 16>, 2> retourne l'attrubut matrice
     */
     std::array<std::array<Game_Object*, 16>, 2> getmatrice();

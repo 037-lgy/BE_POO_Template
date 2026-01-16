@@ -83,6 +83,11 @@ class Game_Object{
     */
     virtual void reset()= 0;
 
+    /**
+     *@fn bot getID()
+     *@brief retourne l'identité de l'objer
+     *@return bot : un type enumerer sur la nature de l'objet
+    */
     bot getID();
 };
 

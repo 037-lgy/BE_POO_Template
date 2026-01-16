@@ -20,7 +20,7 @@ Application::Application()
   led1 = new LED("led_bouton1", D5);
   led2 = new LED("led_bouton2", D0);
   led3 = new LED("led_simple", D7);
-  buzzer = new Buzzer("Buzzer", D8); //A voir sur quel port le mettre ? D4 pourrait fonctionner mais après le téléversement
+  buzzer = new Buzzer("Buzzer", D8);
   my_actuators.push_back(my_screen);
   my_actuators.push_back(led1);
   my_actuators.push_back(led2);
@@ -82,7 +82,7 @@ Application::~Application()
 void Application::init(void)
 {
   Serial.begin(9600);
-  delay(500); //Pour stabiliser les courants sur la carte
+  delay(500);
   Serial.println("--DEBUT DE L'INITIALISATION--");
   for (Actuators* actuator : my_actuators) {
     actuator->initialisation();
